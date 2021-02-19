@@ -5,7 +5,16 @@ import {REGISTRO_EXITOSO,
     OBTENER_CUSOS_INSTRUCTOR,
     CURSOS_ERROR,
     CURSOS_AGREGAR,
-    CURSOS_POR_ID
+    CURSOS_POR_ID,
+    CURSOS_FORM_TEMACURSO,
+    CURSOS_GUARDAR_TEMA_CURSO,
+    CURSOS_FORM_SUBTEMA,
+    CURSOS_SET_IDTEMA,
+    CURSOS_GUARDAR_SUBTEMA_CURSO,
+    CURSOS_OBTENER_SUBTEMAS_CURSO,
+    CURSOS_VACIAR_SUBTEMAS_CURSO,
+    CURSOS_EDICION_HERRAMIENTA,
+    CURSOS_ELIMINAR_HERRAMIENTA
 } from "../../types";
 
 export default (state, action) =>{
@@ -37,8 +46,81 @@ export default (state, action) =>{
                 fechaRegistro: action.payload.fechaRegistro
 
             }
+        case CURSOS_FORM_TEMACURSO:
+            return{
+                ...state,
+                formTemaCurso: action.payload
+            }
+        case CURSOS_GUARDAR_TEMA_CURSO:
+            //console.log(action.payload);
+            return{
+                ...state,
+                temasCurso: action.payload,
+                formTemaCurso: false
+            }
 
+            case CURSOS_FORM_SUBTEMA:
+                console.log(action.payload);
+                return{
+                    ...state,
+                    formSubTema: action.payload
+                }
+            case CURSOS_SET_IDTEMA:
+                    return({
+                        ...state,
+                        idTema: action.payload
+                    })
+            case CURSOS_OBTENER_SUBTEMAS_CURSO:
+                return({
+                    ...state, subTemasCurso: action.payload
+                })
+            case CURSOS_VACIAR_SUBTEMAS_CURSO:
+                return({
+                        ...state, subTemasCurso: []
+                })
+            case CURSOS_EDICION_HERRAMIENTA: 
+                console.log(action.payload);                   
+                //console.log(state.subTemasCurso.map((s) => {return ( s.herramientasubTema.map( 
+                    //(h) => { if( h.idHerramientaCurso==2) {  h.urlHerramienta=""; return h} else { return h }    }) ) }));
+                    let data = state.subTemasCurso;
+                    for(let i=0; i< data.length; i++){
+                        //console.log(data[i].herramientasubTema) ;
+                        let h  = data[i].herramientasubTema ;
+                        for(let j=0; j< h.length; j++){
+                        //console.log(h[j])
+                        let item =  h[j];
+                        if(item.idHerramientaCurso == action.payload.idHerramientaCurso)
+                        {
+                            item  = action.payload;
+                            h[j] = item;
+                        }
+                        }
+                    }
+                    console.log(data);
+                    return {                        
+                    ...state, subTemasCurso: data
+                    }
+            case CURSOS_ELIMINAR_HERRAMIENTA:
+                let d = state.subTemasCurso;
+                    for(let i=0; i< d.length; i++){                        
+                        let h  = d[i].herramientasubTema ;
+                        for(let j=0; j< h.length; j++){                        
+                        let item =  h[j];
+                        if(item.idHerramientaCurso == action.payload.id)
+                        {
+                            item  = action.payload;
+                            item.urlHerramienta ="";
+                            h[j] = item;
+                        }
+                        }
+                    }
+                    console.log(d);
+                    return {                        
+                    ...state, subTemasCurso: d
+                    }
         default: return state;
+                console.log(action.payload);
+                
     }
 
 

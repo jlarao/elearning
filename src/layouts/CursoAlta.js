@@ -35,7 +35,7 @@ useEffect(()=> {
     //props.history.push("/dashboard");
     console.log(redirect);
     //props.history.push(redirect);
-    props.history.push("/curso-detalles/15");
+    props.history.push(redirect);
   }
 }, [mensaje,redirect, props.history])
 

@@ -127,3 +127,11 @@
   .o-wifi-router-1::before { content: "\f321"; }
   .o-wireframe-1::before { content: "\f322"; }
   
+
+  a .rotate-icon{
+    transform: rotate(180deg);
+  }
+
+  a.collapsed .rotate-icon{
+    transform: rotate(0deg);
+  }

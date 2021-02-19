@@ -1,41 +1,40 @@
 import React,{useState, useEffect, useRef, useContext} from 'react';
-import axios, {CancelToken, isCancel} from "axios";
-import clienteAxios from "../config/axios"
-import tokenAuth from "../config/token";
-
+import AlertaContext from "../context/alerta/alertaContext";
 import CursosContext from "../context/cursos/cursosContext";
+import TemaCurso from './cursos/temaCurso';
+import SubTemaCurso from './cursos/subTemaCurso';
+import ListadoSubTema from "./cursos/listadoSubTema";
 
 const  CursoDetalles = (props) =>{   
   
   const cursosContext =  useContext(CursosContext);
-  const { nombreCurso,redirect, mensaje , obtenerCursosPorId} = cursosContext;
-
-    const [numAcordeon,setNumAcordeon] = useState(1);
-    const [video, setVideo] = useState(null);
-    const [urlVideo, setUrlVideo] = useState(null);
-    const [urlPdf, setUrlPdf] = useState(null);
-    const [prevPdf, setPrevPdf] = useState(false);
-    const [prevVideo, setPrevVideo] = useState(false);
-    const [porcentajeSubidoVideo, setporcentajeSubidoVideo] = useState(0);  
-    const [porcentajeSubidoPdf, setporcentajeSubidoPdf] = useState(0);
-    const [pdf, setPdf] = useState(null);
-    const [radioVideo, setRadioVideo] = useState(null);
+  const {  subTemasCurso, temasCurso,formTemaCurso , nombreCurso,redirect, mensaje , 
+    obtenerCursosPorId, mostrarFormTemaCurso,obtenerTemaCursoPorIdCurso,setIdTema,
+    obtenerSubTemasByTemaCursoId} = cursosContext;
+  const alertaContext = useContext(AlertaContext);
+  const {alerta, mostrarAlerta}  = alertaContext;
+  
+  const [paso, setPaso] = useState(0);
     const [datos, setDatos] = useState({
       tema:{ nombre:"", agregarVideo:"", url:"", urlPdf:""},
       error: false,
       errorMsg: ""      
       });
-      const [secciones, guardarSecciones] = useState([]);
-  
-    const cancelSubirVideo = useRef(null);
-    const cancelSubirPdf = useRef(null);
+           
 
     useEffect(() => {        
         obtenerCursoById(props.match.params.courseid);
-    }, [])
+        if(mensaje){
+          mostrarAlerta(mensaje.msg, mensaje.categoria);
+        }
+        //if(temasCurso){
+          //guardarSeccion(temasCurso);
+        //}
+    }, [mensaje])
 
     const obtenerCursoById = async(id) => { 
       obtenerCursosPorId(id);
+      obtenerTemaCursoPorIdCurso(id);
     }
 
     const manejadorSubmit =()=>{
@@ -47,222 +46,62 @@ const  CursoDetalles = (props) =>{
     }
 
     const  manejadorChange =  async e => {  }
+    
+    const manejadorChangeRadio =  e =>{
 
-    const uploadVideo = ({target: { files }}) =>{
-        console.log(files[0]);
-        const formData = new FormData();  
-        // Update the formData object
-        formData.append(      "video",files[0]    ); 
-        const options = {
-          onUploadProgress:   (progressEvent) => {
-            const {loaded, total} = progressEvent;
-            let percent = Math.floor((loaded * 100) / total )
-            console.log(`${loaded}kb of ${total}kb | percent ${percent}`)
-            if(percent < 100){
-              setporcentajeSubidoVideo(percent)
-            }
-          },
-          cancelToken: new CancelToken( cancel => cancelSubirVideo.current = cancel )
-        };
-        axios.post('http://localhost:81/rest/api/video',formData, options)
-        .then(res =>{
-          console.log(res);
-          setporcentajeSubidoVideo(100)
-          setTimeout(setporcentajeSubidoVideo(0) ,2000)
-          console.log(res.data);
-          setUrlVideo(res.data.path);
-          setDatos({
-            ...datos, 
-                tema: {
-                  ...datos.tema,
-                  'url': res.data.path
-                }    })
-          console.log(urlVideo);      
-        })
-        .catch(err =>{
-          console.log(err);
-          if(isCancel(err)){
-            setDatos({
-              error: true,
-              errorMsg: err.message
-            })
-            console.log(err);
-          }
-          setporcentajeSubidoVideo(0);
-        })
-      }
-    
-      const cancelUploadVideo = ()=> {
-        console.log("Cancelando subida video");
-        if( cancelSubirVideo.current)
-          cancelSubirVideo.current(" Usuario ha cancelado la subida del video");
-      }
-    
-      const uploadPdf = ({target: { files }}) =>{
-        console.log(files[0]);
-        const formData = new FormData();  
-        // Update the formData object
-        formData.append(      "pdf",files[0]    ); 
-        const options = {
-          onUploadProgress:   (progressEvent) => {
-            const {loaded, total} = progressEvent;
-            let percent = Math.floor((loaded * 100) / total )
-            console.log(`${loaded}kb of ${total}kb | percent ${percent}`)
-            if(percent < 100){
-              setporcentajeSubidoPdf(percent)
-            }
-          },
-          cancelToken: new CancelToken( cancel => cancelSubirPdf.current = cancel )
-        };
-        axios.post('http://localhost:81/rest/api/pdf',formData, options).then(res =>{
-          console.log(res);
-          setporcentajeSubidoPdf(100)
-          setTimeout(setporcentajeSubidoPdf(0) ,2000)
-          console.log(res.data);
-          setUrlPdf(res.data.path);      
-          setDatos({
-              ...datos, 
-                  tema: {
-                    ...datos.tema,
-                    'urlPdf': res.data.path
-                  }    })
-          console.log(urlPdf);
-        })
-        .catch(err =>{
-          console.log(err);
-          if(isCancel(err)){
-            setDatos({
-              error: true,
-              errorMsg: err.message
-            })
-            console.log(err);
-          }
-          setporcentajeSubidoPdf(0);
-        })
-      }
-    
-      const cancelUploadPdf = ()=> {
-        console.log("Cancelando subida de pdf");
-        if( cancelSubirPdf.current)
-          cancelSubirPdf.current(" Usuario ha cancelado la subida del pdf");
-      }
-    
-      const manejadorChangeRadio =  e =>{
-
-      }
-
-      const previsualizarPdf =  e =>{
-        setPrevPdf(!prevPdf);
     }
-     
-    const previsualizarVideo =  e =>{
-      setPrevVideo(!prevVideo);
-    }    
 
-    const accordeon=[];
-    
-    
-    for (var i = 0; i < secciones.length; i += 1) {
+    const btnSubTemaAgregar =  e =>{
+      console.log(e);
+      //let cambiar = !formSubTema;
+      //console.log(formSubTema);
+      //mostrarFormSubTema(true);
+      setPaso(e);
+      setIdTema(e);
+    }
+    const btnObtenerSubTemaCurso = e => { 
+      obtenerSubTemasByTemaCursoId(e);
+      console.log(" obtener subtemacurso: " + e); 
+    }
+
+    const accordeon=[];               
+            
+    for (var i = 0; i < temasCurso.length; i += 1) {
+      let id = temasCurso[i].idTema; 
         accordeon.push(
-    <div className="card" key={i}>
+    <div className="card mb-2" key={i}>
     <div className="card-header">
-      <a className="collapsed card-link" data-toggle="collapse" href="#collapseOne">
-        Sección {secciones[i].nombre}
-      </a>
+    <div className="row">
+      <div className="col-lg-12" >
+        <a className="collapsed card-link d-flex" data-toggle="collapse" href={"#collapse"+i} onClick= {()=>{btnObtenerSubTemaCurso(id)}}>
+          Sección {temasCurso[i].nombreTema}<i className="fas fa-angle-down rotate-icon ml-auto"></i>
+        </a>
+      </div>      
+      
     </div>
-    <div id="collapseOne" className="collapse show" data-parent="#accordion">
-      <div className="card-body">
-      <div className="form-group row">
-            <label className="col-md-3 form-control-label">Nombre del Tema</label>
-            <div className="col-md-9">
-            <input type="text" className="form-control" name="nombre" onChange={ manejadorChange} />                            
-            </div>
-        </div> 
-
-        <div className="form-group row">
-                        <label className="col-md-3 form-control-label">Agregar Video</label>
-                        <div className="col-md-9">
-                          
-                          <div className="custom-control custom-radio custom-control-inline" onChange={manejadorChangeRadio}>
-                            <input id="customRadioInline1" type="radio" name="agregarVideo" className="custom-control-input" value="agregarVideo"/>
-                            <label htmlFor="customRadioInline1" className="custom-control-label">Subir video</label>
-                          </div>
-                          <div className="custom-control custom-radio custom-control-inline" onChange={manejadorChangeRadio}>
-                            <input id="customRadioInline2" type="radio" name="agregarVideo" className="custom-control-input" value="agregarUrl"/>
-                            <label htmlFor="customRadioInline2" className="custom-control-label">Agregar url </label>
-                          </div>
-                        </div>
-        </div>
-
-        {radioVideo === "agregarVideo" &&
-        <div className="form-group row">
-            <label className="col-md-3 form-control-label">Subir video</label>
-            <div className="col-md-9">
-            <input type="file" name="video" accept="video/mp4,video/x-m4v,video/*" onChange={uploadVideo}/>           
-            {porcentajeSubidoVideo > 0 &&<React.Fragment><div className="row"><div className="progress col-md-6"><div className="progress-bar" style={{"width":porcentajeSubidoVideo+"%"}}>{porcentajeSubidoVideo}</div>
-            </div>
-                          <div className="col-md-3 ">
-                            <span  className="text-primary cursor-pointer" style={{"cursor":"pointer"}}onClick={cancelUploadVideo}>Cancelar</span>                         
-                          </div></div>
-                          </React.Fragment>}
-            </div>            
-        </div>}
-
-        {radioVideo === "agregarUrl" &&
-        <div className="form-group row">
-            <label className="col-md-3 form-control-label">Agregar url de video</label>
-            <div className="col-md-9">
-            <input type="text" className="form-control" name="url" onChange={manejadorChange} />                            
-            </div>
-        </div> }
-
-          {urlVideo !== null && <div className="form-group row">
-                          <div className="col-md-3 ml-auto">
-                            <button type="button" className="btn btn-info" onClick={previsualizarVideo}>{prevVideo ?  "Ocultar Video" : "Previsualizar Video"}</button>                         
-                          </div>
-              </div>}
-              {prevVideo  == true && <div className="form-group row">
-            <div className="col-md-12">
-              <div className="embed-responsive embed-responsive-16by9">
-              <video src={urlVideo} controls>
-              Tu navegador no admite el elemento <code>video</code>.
-          </video>   
-          </div>         
-            </div>
-        </div>}
-         
-
-        <div className="form-group row">
-            <label className="col-md-3 form-control-label">Subir documento pdf</label>
-            <div className="col-md-9">
-            <input type="file" name="documento" accept="application/pdf" onChange={uploadPdf}/>
-            {porcentajeSubidoPdf > 0 &&<React.Fragment> <div className="progress col-md-6"><div className="progress-bar" style={{"width":porcentajeSubidoPdf+"%"}}>{porcentajeSubidoPdf}</div>
-            </div><div className="form-group row">
-                          <div className="col-md-3 ml-auto">
-                            <button type="button" className="btn btn-primary" onClick={cancelUploadPdf}>Cancelar</button>                         
-                          </div>
-                        </div></React.Fragment>}</div>                                 
-        </div>  
-        {urlPdf !== null && <div className="form-group row">
-                          <div className="col-md-3 ml-auto">
-                            <button type="button" className="btn btn-info" onClick={previsualizarPdf}>{prevPdf ?  "Ocultar pdf" : "Previsualizar PDF"}</button>                         
-                          </div>
-              </div>} 
-        {prevPdf === true &&
-        <div className="form-group row">
-        <div className="col-md-12">
-        <object data={urlPdf} type="application/pdf" width="100%" height="100%">
-              <p>Alternative text - include a link <a href={urlPdf}>to the PDF!</a></p>
-            </object>
-          </div>
-          </div>  }    
-
+    </div>
+    <div id={"collapse"+i}  className={i!=0 ? "collapse" : "collapse"}    data-parent="#accordionTema">
+      <div className="card-body">          
+      <div className="col-lg-12 text-right mb-4"><button className ="btn btn-info" onClick={ ()=>{btnSubTemaAgregar(id)}} title="Agregar contenido"><i className="fas fa-plus ml-auto" ></i></button></div>
+      
+      {subTemasCurso.map(subTema=>(
+        <ListadoSubTema subTema={subTema} key ={subTema.subTemaCurso.idSubTema} />        
+      ))}
+      
+      {paso==id ? <SubTemaCurso /> : null}
       </div>
     </div>
   </div>
   );
 }
 
+  const btnTemaCursoAgregar = ()=>{
+    let cambiar = !formTemaCurso;
+    console.log(formTemaCurso);
+    mostrarFormTemaCurso(cambiar);
+  }
+
+  
     return ( <div className="page-holder w-100 d-flex flex-wrap">
     <div className="container-fluid px-xl-5">
       <section className="py-5">
@@ -278,45 +117,31 @@ const  CursoDetalles = (props) =>{
             <div className="card">
               <div className="card-header">
                 <div className="row">
-                  <div className="col-lg-9"><h3 className="h6 text-uppercase mb-0">Curso - {nombreCurso}</h3></div> <div className="col-lg-3"><button type="button" className="btn btn-primary" onClick={botonGuardar}>Agregar Sección</button></div>
+                  <div className="col-lg-9"><h3 className="h6 text-uppercase mb-0">Curso - {nombreCurso}</h3></div> 
+                  <div className="col-lg-3"><button type="button" className="btn btn-primary" onClick={btnTemaCursoAgregar}>Agregar Sección</button></div>
                 </div>
               </div>
               <div className="card-body">
                 <p>Secciones del curso</p>
               <div className="card2">
               <div className="card-body">
-                <form className="form-horizontal" onSubmit={manejadorSubmit} >
+                {<TemaCurso />}
+
                 <div className="row">
                   <div className="col-lg-12 mb-5">
-                  <div className="form-group row">
-                          <label className="col-md-3 form-control-label">Seccion</label>
-                          <div className="col-md-9">
-                            <input type="text" className="form-control" name="seccion" onChange={ manejadorChange} />                            
-                          </div>
-                  </div> 
-                  <div className="form-group row">
-                          <div className="col-md-9 ml-auto">
-                            <input type="submit" value="Guardar Sección" className="btn btn-primary" />                          
-                          </div>
-                        </div>  
+                  {alerta ? <div className={`alert alert-${alerta.categoria}`} role ="alert">{alerta.msg}</div> : null}
+                  <div id="accordionTema">
+                          {accordeon}
+                      </div>
+                      
                   </div>
-                  </div>
-                  {datos.error === true &&
-             <div className="alert alert-danger" role="alert">
-               {datos.errorMsg}
-             </div>
-           }
-                </form>
-
-                <div className="row">
-          <div className="col-lg-12 mb-5">
-          <div id="accordion">
-                  {accordeon}
-              </div>
-          </div>
-        </div>                                                     
+                </div>                                                     
                
-
+                <div className="row">
+                <div className="col-lg-12 mb-5">
+                
+            </div>
+            </div>
                 
                 
               </div>
@@ -326,6 +151,8 @@ const  CursoDetalles = (props) =>{
             </div>
           </div> 
           </div>
+
+         
 
           
       </section>

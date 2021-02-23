@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext }  from 'react';
-import  CursoPasoUno  from "./cursouno";
+import React, { useEffect, useContext }  from 'react';
+
 import AuthContext  from "../context/authentication/authContext";
 import CursosContext from "../context/cursos/cursosContext";
 import { Link } from "react-router-dom";
@@ -10,12 +10,12 @@ function Dashboard() {
   const { usuarioAutenticado} = authContext;
   
   const cursosContext = useContext(CursosContext);
-  const { cursos, obtenerCursosUsuario } = cursosContext;
+  const { cursos, obtenerCursosUsuarioInstructor } = cursosContext;
 
   useEffect(() => {
     usuarioAutenticado();
     console.log("dashboard");
-    obtenerCursosUsuario();
+    obtenerCursosUsuarioInstructor();
   }, []);
 
   var cursosLista = [];
@@ -30,7 +30,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-violet">                        
-          <Link to="/registrar"><button type="button" className="ml-2 btn btn-info">Editar Curso</button></Link>
+          <Link to={"/curso-detalles/"+cursos[i].idCurso}><button type="button" className="ml-2 btn btn-info">Editar Curso</button></Link>
         </div>
       </div>
     )

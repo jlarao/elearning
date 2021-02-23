@@ -147,7 +147,7 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
         <form className="form-horizontal card2" onSubmit={manejadorSubmit}>
             <div className="row card-body">
                 <hr/>
-            <div className="col-lg-12 mb-5"><h5>Agregar video</h5></div>
+            <div className="col-lg-12 mb-5"><h5>Editar video</h5></div>
                 <div className="col-lg-12 mb-5">
                    
                    <div className="form-group row">

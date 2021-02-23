@@ -68,7 +68,7 @@ function Navbar() {
             </div>
           </li>
           <li className="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle"><img src={avatar} alt="Jason Doe" style={styleli} className="img-fluid rounded-circle shadow"/></a>
-            <div aria-labelledby="userInfo" className="dropdown-menu"><a href="#" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuario.firstname }</strong><small>{ usuario.lastname }</small></a>
+            <div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboard" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuario.firstname }</strong><small>{ usuario.lastname }</small></NavLink>
               <div className="dropdown-divider"></div><a href="#" className="dropdown-item">Settings</a><a href="#" className="dropdown-item">Activity log       </a>
               <div className="dropdown-divider"></div><button  className="dropdown-item" onClick={()=>{cerrarSesion()}}><div className="dropdown-item">Cerrar Sesión</div></button>
             </div>

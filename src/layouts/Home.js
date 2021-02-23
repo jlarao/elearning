@@ -21,13 +21,16 @@ function Home() {
     for(let i=0; i < popularCourses.length; i++){
       if(popularCourses[i].poster===""){
         var poster = require(`../assets/img/course-1.png`)
+        poster = poster.default;
       }else if(popularCourses[i].poster.startsWith("http")){
         var poster = popularCourses[i].poster;
+        //console.log(poster);
       }else{
         var poster = require(`../assets/img/${popularCourses[i].poster}`)
+        poster = poster.default;
       }
         
-        console.log(poster.default);
+        console.log(poster);
         courseList.push(
             <div className="col-lg-4 col-md-6 mb-4 mb-lg-0 pl-lg-0" key={"curso"+i}>
             <div className="card mb-3">
@@ -35,11 +38,11 @@ function Home() {
                 <div className="">
                   
                 <div className="section section-b rel">
-                    <h2 className="title s24 fontb">{popularCourses[i].nombreCurso} <span className="fontn"></span></h2>
+                    <h2 className="title s24 fontb"><span className="fontn"></span></h2>
                     <div className=" courses rel flex">
             <NavLink to={"/course/"+ popularCourses[i].idCurso} className="course rel" key = {"popular-course"+ i}>
                 <div className="block rel" style={{
-                    background: "#e2e2e2 no-repeat center url("+poster.default+")"
+                    background: "#e2e2e2 no-repeat center url("+poster+")"
                 }}>
                     <div className="user abs aic flex" >
                         <div className="pic">

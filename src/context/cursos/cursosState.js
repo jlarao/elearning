@@ -17,7 +17,15 @@ import {
     CURSOS_OBTENER_SUBTEMAS_CURSO,
     CURSOS_VACIAR_SUBTEMAS_CURSO,
     CURSOS_EDICION_HERRAMIENTA,
-    CURSOS_ELIMINAR_HERRAMIENTA
+    CURSOS_ELIMINAR_HERRAMIENTA,
+    CURSOS_EDICION_HERRAMIENTA_DOC,
+    CURSOS_ELIMINAR_HERRAMIENTA_DOC,
+    CURSOS_AGREGAR_HERRAMIENTA_DOC,
+    CURSOS_AGREGAR_SUBTEMA_CURSO,
+    CURSOS_EDITAR_SUBTEMA_CURSO,
+    CURSOS_ELIMINAR_SUBTEMA_CURSO,
+    CURSOS_EDITAR_TEMA_CURSO,
+    CURSOS_ELIMINAR_TEMA_CURSO
 } from "../../types";
 
 
@@ -41,16 +49,22 @@ const CursosState = props => {
     }
     const [state, dispatch] = useReducer(CursosReducer, initialState);
 
-        const obtenerCursosUsuario = async() => { 
-            //console.log("obtener cursos"); 
+        const obtenerCursosUsuarioInstructor = async() => { 
+            //console.log("obtener cursos");
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }   
             try {
-                const api = await fetch('http://localhost:81/rest/api/cursos?page=0');
-                const cursos = await api.json();
-                //console.log(cursos); 
+                //const api = await fetch('http://localhost:81/rest/api/cursos?page=0');
+                //const cursos = await api.json();
+                const api = await clienteAxios.get("cursos?instruc=0");
+                console.log(api); 
                 dispatch({
                 type: OBTENER_CUSOS_INSTRUCTOR,
-                payload: cursos
-            })                  
+                payload: api.data.data
+            })    
             } catch (error) {
                 const alert = {
                     msg: "Hubo un error",
@@ -111,7 +125,7 @@ const CursosState = props => {
                 //console.log(cursos); 
                 dispatch({
                 type: CURSOS_POR_ID,
-                payload: response.data[0]
+                payload: response.data
             })                  
             } catch (error) {
                 const alert = {
@@ -216,10 +230,51 @@ const CursosState = props => {
                 const response = await clienteAxios.post("subTemaCurso ", curso);
                 console.log(response.data);               
                 //props.history.push("/curso-detalles/"+response.data.idCurso)
+               /* let subTema = {
+                    idTema: curso.idTema,
+                    idUsuarioRegistro: '',
+                    nombreTema: curso.subTema
+                };*/
+
                 dispatch({
-                    type: CURSOS_GUARDAR_SUBTEMA_CURSO,
+                    type: CURSOS_AGREGAR_SUBTEMA_CURSO,
                     payload: response.data.data
-                })                                                          
+                })
+            } catch (error) {                             
+                console.log(error.response.data);
+                    // client received an error response (5xx, 4xx)
+                    const alerta =  {
+                        msg: `error al conectar al api ${error.response.data.message}`,
+                        categoria :'danger'
+                    }
+                    dispatch({
+                        type: CURSOS_ERROR,
+                        payload: alerta
+                    })                                                          
+            }            
+        }
+
+        const editarSubTemaCurso = async(curso) => { 
+            console.log(curso);
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }              
+            try {
+                const response = await clienteAxios.put("subTemaCurso ", curso);
+                console.log(response.data);               
+                //props.history.push("/curso-detalles/"+response.data.idCurso)
+               /* let subTema = {
+                    idTema: curso.idTema,
+                    idUsuarioRegistro: '',
+                    nombreTema: curso.subTema
+                };*/
+
+                dispatch({
+                    type: CURSOS_EDITAR_SUBTEMA_CURSO,
+                    payload: curso
+                })
             } catch (error) {                             
                 console.log(error.response.data);
                     // client received an error response (5xx, 4xx)
@@ -323,7 +378,213 @@ const CursosState = props => {
                 })
             }          
         }
+        const edicionHerramientaDocCurso = async(herramienta) => {            
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            } 
+            try {
+                const response = await clienteAxios.put("herramientasCurso", herramienta);
+                console.log(response.data);                
+                //console.log(cursos); 
+                dispatch({
+                type: CURSOS_EDICION_HERRAMIENTA_DOC,
+                payload: herramienta
+            })       
+              console.log(state.subTemasCurso);         
+            } catch (error) {
+                const alert = {
+                    msg: "Hubo un error",
+                    categoria: "alert"
+                }
+                dispatch({
+                    type: CURSOS_ERROR,
+                    payload: alert
+                })
+            }          
+        }
 
+        const eliminarHerramientaDocCurso = async(idHerramientaCurso) => {            
+            const token = localStorage.getItem('token');        
+            console.log("eliminar herramienta"); 
+            console.log(idHerramientaCurso  ); 
+            
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            } 
+            try {
+                const response = await clienteAxios.delete("herramientasCurso", { params: { idHerramientaCurso, estatus: false }});
+                console.log(response.data);                
+                //console.log(cursos); 
+                dispatch({
+                type: CURSOS_ELIMINAR_HERRAMIENTA_DOC,
+                payload: idHerramientaCurso
+            })       
+              console.log(state.subTemasCurso);         
+            } catch (error) {
+                console.log(error);   
+                const alert = {
+                    msg: "Hubo un error",
+                    categoria: "alert"
+                }
+                dispatch({
+                    type: CURSOS_ERROR,
+                    payload: alert
+                })
+            }          
+        } 
+        const agregarHerramientaDocCurso = async(herramienta) => { 
+            console.log(herramienta);
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }              
+            try {
+                const response = await clienteAxios.post("herramientasCurso ", herramienta);
+                console.log(response.data);               
+                //props.history.push("/curso-detalles/"+response.data.idCurso)
+                herramienta.idHerramientaCurso = response.data.data;
+                dispatch({
+                    type: CURSOS_AGREGAR_HERRAMIENTA_DOC,
+                    payload: herramienta
+                })                                                          
+            } catch (error) {                             
+                console.log(error.response.data);
+                    // client received an error response (5xx, 4xx)
+                    const alerta =  {
+                        msg: `error al conectar al api ${error.response.data.message}`,
+                        categoria :'danger'
+                    }
+                    dispatch({
+                        type: CURSOS_ERROR,
+                        payload: alerta
+                    })                                                          
+            }            
+        }
+
+        const obtenerSubTemasByTemaId = async(id) => {            
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            } 
+            try {
+                
+                dispatch({
+                    type: CURSOS_VACIAR_SUBTEMAS_CURSO
+                })
+
+                const response = await clienteAxios.get("subTemaCurso?idCurso="+id);
+                console.log(response.data);                
+                //console.log(cursos); 
+                dispatch({
+                type: CURSOS_OBTENER_SUBTEMAS_CURSO,
+                payload: response.data.data
+            })                  
+            } catch (error) {
+                const alert = {
+                    msg: "Hubo un error",
+                    categoria: "alert"
+                }
+                dispatch({
+                    type: CURSOS_ERROR,
+                    payload: alert
+                })
+            }          
+        }
+
+        const eliminarSubTemaCurso = async(idSubTema) => { 
+            console.log(idSubTema);
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }              
+            try {
+                const response = await clienteAxios.delete("subTemaCurso",  { params: { idSubTema }});
+                console.log(response.data);               
+                //props.history.push("/curso-detalles/"+response.data.idCurso)
+               /* let subTema = {
+                    idTema: curso.idTema,
+                    idUsuarioRegistro: '',
+                    nombreTema: curso.subTema
+                };*/
+
+                dispatch({
+                    type: CURSOS_ELIMINAR_SUBTEMA_CURSO,
+                    payload: idSubTema
+                })
+            } catch (error) {                             
+                console.log(error.response.data);
+                    // client received an error response (5xx, 4xx)
+                    const alerta =  {
+                        msg: `error al conectar al api ${error.response.data.message}`,
+                        categoria :'danger'
+                    }
+                    dispatch({
+                        type: CURSOS_ERROR,
+                        payload: alerta
+                    })                                                          
+            }            
+        }
+
+        const editarTemaCurso = async(curso) => { 
+            console.log(curso);
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }              
+            try {
+                const response = await clienteAxios.put("temaCurso ", curso);
+                console.log(response.data);
+                dispatch({
+                    type: CURSOS_EDITAR_TEMA_CURSO,
+                    payload: curso
+                })
+            } catch (error) {                             
+                console.log(error.response.data);
+                    // client received an error response (5xx, 4xx)
+                    const alerta =  {
+                        msg: `error al conectar al api ${error.response.data.message}`,
+                        categoria :'danger'
+                    }
+                    dispatch({
+                        type: CURSOS_ERROR,
+                        payload: alerta
+                    })                                                          
+            }            
+        }
+        const eliminarTemaCurso = async(idTema) => { 
+            console.log(idTema);
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }              
+            try {
+                const response = await clienteAxios.delete("temaCurso",  { params: { idTema }});
+                console.log(response.data);                             
+                dispatch({
+                    type: CURSOS_ELIMINAR_TEMA_CURSO,
+                    payload: idTema
+                })
+            } catch (error) {                             
+                console.log(error.response.data);
+                    // client received an error response (5xx, 4xx)
+                    const alerta =  {
+                        msg: `error al conectar al api ${error.response.data.message}`,
+                        categoria :'danger'
+                    }
+                    dispatch({
+                        type: CURSOS_ERROR,
+                        payload: alerta
+                    })                                                          
+            }            
+        }
     return ( 
         <CursosContext.Provider
             value={{
@@ -337,7 +598,7 @@ const CursosState = props => {
                 formSubTema: state.formSubTema,                
                 idTema: state.idTema,
                 subTemasCurso: state.subTemasCurso,
-                obtenerCursosUsuario,
+                obtenerCursosUsuarioInstructor,
                 agregarCurso,
                 obtenerCursosPorId,
                 mostrarFormTemaCurso,
@@ -348,7 +609,15 @@ const CursosState = props => {
                 guardarSubTemaCurso,
                 obtenerSubTemasByTemaCursoId,
                 edicionHerramientaCurso,
-                eliminarHerramientaCurso
+                eliminarHerramientaCurso,
+                edicionHerramientaDocCurso,
+                eliminarHerramientaDocCurso,
+                agregarHerramientaDocCurso,
+                obtenerSubTemasByTemaId,
+                editarSubTemaCurso,
+                eliminarSubTemaCurso,
+                editarTemaCurso,
+                eliminarTemaCurso
                 }}
         >
             {props.children}

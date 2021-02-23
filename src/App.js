@@ -11,11 +11,15 @@ import RegistroExitoso from "./layouts/RegistroExitoso";
 import Dashboard from './components/dashboard';
 import RutaPrivada from "./components/rutas/RutaPrivada";
 import CursoDetalles from "./components/cursoDetalles";
+import Reproducir from "./components/reproductor/reproducir";
 
 import AuthState from "./context/authentication/authState";
 import AlertasState from "./context/alerta/alertaState";
 import CursosState from "./context/cursos/cursosState";
 import  tokenAuth  from "./config/token";
+//redux
+import {Provider} from "react-redux";
+import store from "./store";
 
 // revisar token
 const token = localStorage.getItem('token');
@@ -30,6 +34,7 @@ function App() {
     <AuthState> 
       <AlertasState> 
     <HashRouter>  
+      <Provider store={store}>
     <Navbar />  
     <div className="d-flex align-items-stretch">
         <Sidebar />    
@@ -43,9 +48,10 @@ function App() {
           <RutaPrivada exact path="/dashboard" component={Dashboard}/>        
           <Route path="/curso-alta" component={CursoAlta}/>
           <Route path="/curso-detalles/:courseid" component={CursoDetalles}/>
-          
+          <Route path="/curso-tomar/:courseid" component={Reproducir}/>
         </CursosState>
     </div>
+    </Provider>
 </HashRouter> 
 </AlertasState>
 </AuthState>

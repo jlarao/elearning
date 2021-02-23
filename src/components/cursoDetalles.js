@@ -4,17 +4,18 @@ import CursosContext from "../context/cursos/cursosContext";
 import TemaCurso from './cursos/temaCurso';
 import SubTemaCurso from './cursos/subTemaCurso';
 import ListadoSubTema from "./cursos/listadoSubTema";
-
+import TemaCursoEditar from "./cursos/temaCursoEditar";
 const  CursoDetalles = (props) =>{   
   
   const cursosContext =  useContext(CursosContext);
-  const {  subTemasCurso, temasCurso,formTemaCurso , nombreCurso,redirect, mensaje , 
+  const {  mensaje, subTemasCurso, temasCurso,formTemaCurso , nombreCurso,  
     obtenerCursosPorId, mostrarFormTemaCurso,obtenerTemaCursoPorIdCurso,setIdTema,
-    obtenerSubTemasByTemaCursoId} = cursosContext;
+    obtenerSubTemasByTemaCursoId, obtenerSubTemasByTemaId, eliminarTemaCurso} = cursosContext;
   const alertaContext = useContext(AlertaContext);
   const {alerta, mostrarAlerta}  = alertaContext;
   
-  const [paso, setPaso] = useState(0);
+  const [temaForm, setTemaForm] = useState(0);
+  const [subTemaForm, setSubTemaForm] = useState(0);
     const [datos, setDatos] = useState({
       tema:{ nombre:"", agregarVideo:"", url:"", urlPdf:""},
       error: false,
@@ -35,70 +36,88 @@ const  CursoDetalles = (props) =>{
     const obtenerCursoById = async(id) => { 
       obtenerCursosPorId(id);
       obtenerTemaCursoPorIdCurso(id);
+      obtenerSubTemasByTemaId(id);
     }
-
-    const manejadorSubmit =()=>{
-
-    }
-
-    const botonGuardar =()=>{
-        
-    }
-
-    const  manejadorChange =  async e => {  }
     
-    const manejadorChangeRadio =  e =>{
-
-    }
-
     const btnSubTemaAgregar =  e =>{
       console.log(e);
       //let cambiar = !formSubTema;
       //console.log(formSubTema);
       //mostrarFormSubTema(true);
-      setPaso(e);
+      setSubTemaForm(e);
       setIdTema(e);
     }
     const btnObtenerSubTemaCurso = e => { 
-      obtenerSubTemasByTemaCursoId(e);
+      //obtenerSubTemasByTemaCursoId(e);
       console.log(" obtener subtemacurso: " + e); 
     }
+    const btnSubTemaOcultarForm = e =>{
+      setSubTemaForm(0);
+    }
 
+    const btnTemaOcultarForm = e =>{
+      setTemaForm(0);
+    }
+    const btnTemaCursoEditar = e =>{      
+        setTemaForm(e);
+    }
+    const btnTemaCursoEliminar = e =>{
+      console.log(e);
+      eliminarTemaCurso(e);
+    }
     const accordeon=[];               
             
     for (var i = 0; i < temasCurso.length; i += 1) {
       let id = temasCurso[i].idTema; 
-        accordeon.push(
-    <div className="card mb-2" key={i}>
+      let nombreTema =  temasCurso[i].nombreTema;
+        accordeon.push(<React.Fragment key={"temasCurso"+id}>
+    <div className="card mb-2" key={"tema"+id}>
     <div className="card-header">
     <div className="row">
-      <div className="col-lg-12" >
+      <div className="col-lg-10" >
         <a className="collapsed card-link d-flex" data-toggle="collapse" href={"#collapse"+i} onClick= {()=>{btnObtenerSubTemaCurso(id)}}>
           Sección {temasCurso[i].nombreTema}<i className="fas fa-angle-down rotate-icon ml-auto"></i>
         </a>
-      </div>      
+      </div>
+      <div className="col-lg-2" title = "Editar Titulo"  > 
+      <button className ="btn  btn-outline-primary" onClick={ ()=>{btnTemaCursoEditar(`tema${id}`)} }><i className="fa fa-pencil-alt"></i></button>
+  <button className ="btn  btn-outline-danger ml-1" onClick={ ()=>{btnTemaCursoEliminar(id)} }><i className="fa fa-trash"></i></button></div>      
       
     </div>
     </div>
     <div id={"collapse"+i}  className={i!=0 ? "collapse" : "collapse"}    data-parent="#accordionTema">
       <div className="card-body">          
+      
+      
+      <div id={"accordionSubTema"} >
+      {subTemasCurso.map(subTema=>{
+        if(subTema.subTemaCurso.idTema === id){
+        return <ListadoSubTema subTema={subTema} key ={"subTema"+subTema.subTemaCurso.idSubTema}/>
+        }else {
+          return null;
+        }
+      }
+      )
+    }
+      </div>
+
+
+      {subTemaForm==id ? <SubTemaCurso  btnSubTemaOcultarForm={btnSubTemaOcultarForm} idTema={id} /> : null}
+      
+
       <div className="col-lg-12 text-right mb-4"><button className ="btn btn-info" onClick={ ()=>{btnSubTemaAgregar(id)}} title="Agregar contenido"><i className="fas fa-plus ml-auto" ></i></button></div>
-      
-      {subTemasCurso.map(subTema=>(
-        <ListadoSubTema subTema={subTema} key ={subTema.subTemaCurso.idSubTema} />        
-      ))}
-      
-      {paso==id ? <SubTemaCurso /> : null}
       </div>
     </div>
   </div>
-  );
+
+{temaForm  == `tema${id}` ? <TemaCursoEditar btnTemaOcultarForm={btnTemaOcultarForm} idTema={id} nombreTem ={nombreTema}/> : null }
+</React.Fragment>);
 }
 
   const btnTemaCursoAgregar = ()=>{
     let cambiar = !formTemaCurso;
     console.log(formTemaCurso);
-    mostrarFormTemaCurso(cambiar);
+    mostrarFormTemaCurso(true);
   }
 
   

@@ -14,7 +14,16 @@ import {REGISTRO_EXITOSO,
     CURSOS_OBTENER_SUBTEMAS_CURSO,
     CURSOS_VACIAR_SUBTEMAS_CURSO,
     CURSOS_EDICION_HERRAMIENTA,
-    CURSOS_ELIMINAR_HERRAMIENTA
+    CURSOS_ELIMINAR_HERRAMIENTA,
+    CURSOS_EDICION_HERRAMIENTA_DOC,
+    CURSOS_ELIMINAR_HERRAMIENTA_DOC,
+    CURSOS_AGREGAR_HERRAMIENTA_DOC,
+    CURSOS_AGREGAR_SUBTEMA_CURSO,
+    CURSOS_EDITAR_SUBTEMA_CURSO,
+    CURSOS_ELIMINAR_SUBTEMA_CURSO,
+    CURSOS_EDITAR_TEMA_CURSO,
+    CURSOS_ELIMINAR_TEMA_CURSO
+    
 } from "../../types";
 
 export default (state, action) =>{
@@ -79,9 +88,7 @@ export default (state, action) =>{
                         ...state, subTemasCurso: []
                 })
             case CURSOS_EDICION_HERRAMIENTA: 
-                console.log(action.payload);                   
-                //console.log(state.subTemasCurso.map((s) => {return ( s.herramientasubTema.map( 
-                    //(h) => { if( h.idHerramientaCurso==2) {  h.urlHerramienta=""; return h} else { return h }    }) ) }));
+                console.log(action.payload);                                                   
                     let data = state.subTemasCurso;
                     for(let i=0; i< data.length; i++){
                         //console.log(data[i].herramientasubTema) ;
@@ -89,7 +96,7 @@ export default (state, action) =>{
                         for(let j=0; j< h.length; j++){
                         //console.log(h[j])
                         let item =  h[j];
-                        if(item.idHerramientaCurso == action.payload.idHerramientaCurso)
+                        if(item.idHerramientaCurso === action.payload.idHerramientaCurso)
                         {
                             item  = action.payload;
                             h[j] = item;
@@ -106,11 +113,14 @@ export default (state, action) =>{
                         let h  = d[i].herramientasubTema ;
                         for(let j=0; j< h.length; j++){                        
                         let item =  h[j];
-                        if(item.idHerramientaCurso == action.payload.id)
+                        console.log(item.idHerramientaCurso);
+                        console.log(action.payload);
+                        if(item.idHerramientaCurso === action.payload)
                         {
-                            item  = action.payload;
+                            //item  = action.payload;
                             item.urlHerramienta ="";
                             h[j] = item;
+                            console.log("urlherramienta vacia");
                         }
                         }
                     }
@@ -118,8 +128,112 @@ export default (state, action) =>{
                     return {                        
                     ...state, subTemasCurso: d
                     }
-        default: return state;
-                console.log(action.payload);
+        case CURSOS_EDICION_HERRAMIENTA_DOC:
+            console.log(action.payload);                                                   
+                    let dataDoc = state.subTemasCurso;
+                    for(let i=0; i< dataDoc.length; i++){
+                        //console.log(dataDoc[i].herramientasubTema) ;
+                        let h  = dataDoc[i].herramientasubTema ;
+                        for(let j=0; j< h.length; j++){
+                        //console.log(h[j])
+                        let item =  h[j];
+                        if(item.idHerramientaCurso === action.payload.idHerramientaCurso)
+                        {
+                            item  = action.payload;
+                            h[j] = item;
+                        }
+                        }
+                    }
+                    console.log(dataDoc);
+                    return {                        
+                    ...state, subTemasCurso: dataDoc
+                    }
+        case CURSOS_ELIMINAR_HERRAMIENTA_DOC:
+            let dDoc = state.subTemasCurso;
+                    for(let i=0; i< dDoc.length; i++){                        
+                        let h  = dDoc[i].herramientasubTema ;
+                        for(let j=0; j< h.length; j++){                        
+                        let item =  h[j];
+                        console.log(item.idHerramientaCurso);
+                        console.log(action.payload);
+                        if(item.idHerramientaCurso === action.payload)
+                        {
+                            //item  = action.payload;
+                            item.estatus ="Suspendido";
+                            h[j] = item;
+                            console.log("urlherramienta vacia");
+                        }
+                        }
+                    }
+                    console.log(dDoc);
+                    return {                        
+                    ...state, subTemasCurso: dDoc
+                    }
+        case CURSOS_AGREGAR_HERRAMIENTA_DOC:
+            let dDocA = state.subTemasCurso;
+            for(let i=0; i< dDocA.length; i++){                        
+                let s  = dDocA[i].subTemaCurso ;
+                let h  = dDocA[i].herramientasubTema ;                                               
+                if(s.idSubTema === action.payload.idTema)
+                {                                                      
+                    h.push(action.payload);
+                    
+                }
+                }
+                return {                        
+                    ...state, subTemasCurso: dDocA
+                    }
+    
+        case CURSOS_AGREGAR_SUBTEMA_CURSO:
+            return {
+                ...state,
+                subTemasCurso: [...state.subTemasCurso, action.payload]
+            }
+        case CURSOS_EDITAR_SUBTEMA_CURSO:
+            console.log(action.payload);                                                   
+            let subTemasCeEd = state.subTemasCurso;
+            for(let i=0; i< subTemasCeEd.length; i++){
+                //console.log(dataDoc[i].herramientasubTema) ;
+                let stc  = subTemasCeEd[i].subTemaCurso ;
+                //for(let j=0; j< stc.length; j++){
+                console.log(stc)
+                //let item =  stc[j];
+                if(stc.idSubTema === action.payload.idSubTema)
+                {
+                    stc.nombreSubTema  = action.payload.nombreSubTema;
+                    //stc[j]  = item;
+                    console.log("actualizando");                    
+                }
+                //}
+            }
+            console.log(subTemasCeEd);
+                    return {                        
+                    ...state, subTemasCurso: subTemasCeEd
+                    }
+        case CURSOS_ELIMINAR_SUBTEMA_CURSO:            
+                    return {                        
+                    ...state, subTemasCurso: state.subTemasCurso.filter(function(s){return s.subTemaCurso.idSubTema !== action.payload })
+                    }
+        case CURSOS_EDITAR_TEMA_CURSO:
+            console.log(action.payload);                                                   
+            let TemasCUEd = state.temasCurso;
+            for(let i=0; i< TemasCUEd.length; i++){
+                let tce = TemasCUEd[i]; 
+                if(tce.idTema === action.payload.idTema)
+                {
+                    tce.nombreTema  = action.payload.nombreTema;                    
+                    console.log("actualizando");                    
+                }                
+            }
+            console.log(TemasCUEd);
+                    return {                        
+                    ...state, temasCurso: TemasCUEd
+                    }
+        case CURSOS_ELIMINAR_TEMA_CURSO:            
+                    return {                        
+                    ...state, temasCurso: state.temasCurso.filter(function(s){return s.idTema !== action.payload })
+                    }
+        default: return state;                
                 
     }
 

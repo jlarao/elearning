@@ -4,7 +4,7 @@ import CursosContext from "../../context/cursos/cursosContext";
 
 const TemaCurso = () => {
     const cursosContext =  useContext(CursosContext);
-    const { id, formTemaCurso, guardarTemaCurso} = cursosContext;
+    const { id, formTemaCurso, guardarTemaCurso, mostrarFormTemaCurso} = cursosContext;
     const [datos, setDatos] = useState({        
         seccion:"",
         id:0,        
@@ -57,17 +57,19 @@ const TemaCurso = () => {
                   </div> 
                   <div className="form-group row">
                           <div className="col-md-9 ml-auto">
-                            <input type="submit" value="Guardar Sección" className="btn btn-primary" />                          
+                            <input type="submit" value="Guardar Sección" className="btn btn-primary" />
+                            <button type="button" className="btn btn-danger ml-1" onClick={ ()=> {mostrarFormTemaCurso(false)} }>Cancelar</button>
                           </div>
                         </div>  
                   </div>
                   </div>
-                  </form>}
                   {datos.error === true &&
              <div className="alert alert-danger" role="alert">
                {datos.errorMsg}
              </div>
            }
+                  </form>}
+                  
             </React.Fragment>    
      );
 }

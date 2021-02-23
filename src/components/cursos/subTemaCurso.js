@@ -4,9 +4,9 @@ import CursosContext from "../../context/cursos/cursosContext";
 import clienteAxios from "../../config/axios"
 import tokenAuth from "../../config/token";
 
-const SubTemaCurso = () => {
+const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
     const cursosContext =  useContext(CursosContext);
-    const { idTema, guardarSubTemaCurso } = cursosContext;
+    const { guardarSubTemaCurso } = cursosContext;
 
     const [urlPdf, setUrlPdf] = useState(null);
     const [prevPdf, setPrevPdf] = useState(false);
@@ -31,7 +31,8 @@ const SubTemaCurso = () => {
           agregarVideo: "",
           tituloVideo: "",
           urlPdf: "",
-          tituloDocumento: ""
+          tituloDocumento: "",
+          idTema: idTema
         }       
     });
 
@@ -172,6 +173,7 @@ const SubTemaCurso = () => {
                             }    })
                             console.log(datos);
                             console.log("informacion agregada correctamente");
+                            btnSubTemaOcultarForm();
                             guardarSubTemaCurso(datos.tema);
               }else{
               setDatos({
@@ -194,6 +196,7 @@ const SubTemaCurso = () => {
                       console.log(datos);
                       console.log("informacion agregada correctamente");
                       guardarSubTemaCurso(datos.tema);
+                      btnSubTemaOcultarForm();
               }
           }else{
                 setDatos({
@@ -248,10 +251,10 @@ const SubTemaCurso = () => {
 
     return ( <React.Fragment>
         {true === true &&
-        <form className="form-horizontal" onSubmit={manejadorSubmit}>
-            <div className="row">
+        <form className="form-horizontal card2" onSubmit={manejadorSubmit}>
+            <div className="row card-body">
                 <hr/>
-            <div className="col-lg-12 mb-5"><h5>Agregar video o documento</h5></div>
+            <div className="col-lg-12 mb-5"><h5>Agregar tema</h5></div>
                 <div className="col-lg-12 mb-5">
                   <div className="form-group row">
                     <label className="col-md-3 form-control-label">Nombre del Tema</label>
@@ -353,19 +356,22 @@ const SubTemaCurso = () => {
                  
                   </div>
                   </div>
-                  </form>}
                   <div className="row">
                 <div className="col-lg-12 mb-5">
                 <div className="col-md-3 ml-auto">
-                            <button type="button" className="btn btn-primary" onClick={botonGuardar}>Guardar</button>                         
+                            <button type="button" className="btn btn-primary mr-1" onClick={botonGuardar}>Guardar</button>  
+                            <button type="button" className="btn btn-danger" onClick={btnSubTemaOcultarForm}>Cancelar</button>                            
                           </div>
                 </div>
                 </div>
-                  {datos.error === true &&
+                {datos.error === true &&
              <div className="alert alert-danger" role="alert">
                {datos.errorMsg}
              </div>
            }
+                  </form>}
+                  
+                  
             </React.Fragment> );
 }
  

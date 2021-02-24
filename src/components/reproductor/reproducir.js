@@ -2,20 +2,25 @@ import React, {useEffect, useState} from 'react';
 import ListadoVideos from "./listadoVideos";
 import ContenidoTabVideo from "./contenidoTabVideo";
 import { useDispatch, useSelector } from "react-redux";
+import VideoPlayerUrl from "./video";
 //actions redux
 import  { obtenerCursoContenidoReproductor } from "../../actions/cursoReproductorActions";
 const Reproducir = (props) => {
     //redux
     const dispatch = useDispatch();
     //state curs reproductor
-    const curso = useSelector(state => state.cursoReproductor.curso)
+    const curso = useSelector(state => state.cursoReproductor.curso);
+    const temas = useSelector(state => state.cursoReproductor.temas);
+    const subTemas  = useSelector(state => state.cursoReproductor.subTemas);
     useEffect(() => {
         const obtenerContenido = e => dispatch( obtenerCursoContenidoReproductor(e) );
         obtenerContenido(props.match.params.courseid);
     }, [])
-    console.log(curso);
+    //console.log(curso);
     //state
-    const [subTemas, setSubTemas] = useState([]);
+    
+    
+    
     /*
     <ul className="nav nav-tabs">
                         <li className="nav-item">
@@ -34,18 +39,46 @@ const Reproducir = (props) => {
                         <div className="tab-pane container fade" id="menu2c">Menu 2</div>
                         </div>
     */
+   const [mostrarReproductorVideo, setMostrarReproductorVideo] = useState(0);
+   const [primerVideo, setPrimerVideo] = useState(0);
+   const btnSetReproductorVideo= (e)=>{
+       setMostrarReproductorVideo(e);
+   }
+   const btnSetPrimerVideo= (e)=>{
+       setPrimerVideo(e);
+       console.log(e);
+   }
+   const ReproductoresVideos=[];
+    temas.map(tema => {
+        
+                    {subTemas.map(s => {
+            if(s.subTemaCurso.idTema === tema.idTema  ){
+                return s.herramientasubTema.map(h => {
+                    if(h.nombreTipo !== "pdf"){
+                        let url = h.urlHerramienta;                       
+                        return(
+                            ReproductoresVideos.push(
+                                <React.Fragment key={h.idHerramientaCurso}>
+                            {mostrarReproductorVideo === h.idHerramientaCurso ? < VideoPlayerUrl url={url}/> : null}
+                                       </React.Fragment>        
+                            )
+                        )
+                    }                                            
+                })
+            }else return null;
+            })
+        }
+    
+    }); 
     return (
         <div className="page-holder w-100 d-flex flex-wrap">
         <div className="container-fluid px-xl-5">         
         <section className="course-video-section padding-bottom-110 py-5">
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-lg-8 p-0 order-2 order-lg-1">
-                        <div className="course-video-part">
-                            <video controls>
-                                <source src="assets/video/html.mp4" type="video/mp4"/>
-                            </video>
-                        </div>
+                    <div className="col-lg-8 p-0 order-2 order-lg-1">                        
+                        {mostrarReproductorVideo === 0 ? < VideoPlayerUrl url={primerVideo.urlHerramienta}/> : null}
+                        {ReproductoresVideos}
                         <div className="course-video-tab padding-top-60">
 
                         <ContenidoTabVideo />                            
@@ -53,7 +86,7 @@ const Reproducir = (props) => {
                         </div>
                     </div>
                     <div className="col-lg-4 p-0 order-1 order-lg-2">
-                        <ListadoVideos curso={curso}/>
+                        <ListadoVideos curso={curso} temas={temas} subTemas={subTemas}  btnSetReproductorVideo={btnSetReproductorVideo} btnSetPrimerVideo={btnSetPrimerVideo}/>
                     </div>
                 </div>
             </div>

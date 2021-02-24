@@ -11,7 +11,8 @@ const initialState= {
     temas:[],
     subTemas:[],
     error: null,
-    loading: false
+    loading: false,
+    primerVideo:null
 }
 export default function(state = initialState, action ){
     switch(action.type){

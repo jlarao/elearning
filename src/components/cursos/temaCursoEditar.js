@@ -1,8 +1,6 @@
-import React, {useState, useRef, useContext} from 'react';
-import axios, {CancelToken, isCancel} from "axios";
+import React, {useState, useContext} from 'react';
 import CursosContext from "../../context/cursos/cursosContext";
-import clienteAxios from "../../config/axios"
-import tokenAuth from "../../config/token";
+
 
 const TemaCursoEditar = ({idTema , nombreTem, btnTemaOcultarForm}) => {
     const cursosContext =  useContext(CursosContext);
@@ -67,7 +65,7 @@ const TemaCursoEditar = ({idTema , nombreTem, btnTemaOcultarForm}) => {
  
 
     return ( <React.Fragment>
-        {true === true &&
+        
         <form className="form-horizontal card2" onSubmit={manejadorSubmit}>
             <div className="row card-body">
                 <hr/>
@@ -97,7 +95,7 @@ const TemaCursoEditar = ({idTema , nombreTem, btnTemaOcultarForm}) => {
                {datos.errorMsg}
              </div>
            }
-                  </form>}
+                  </form>
                   
                   
             </React.Fragment> );

@@ -15,12 +15,13 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
         errorMsg: "",
         tema: {          
             agregarVideo: "",
-            formatoHerramienta: herramienta.formatoHerramienta,
+            formatoHerramienta: "",
             idHerramientaCurso: herramienta.idHerramientaCurso,
             idTema: herramienta.idTema,
             nombreHerramienta: herramienta.nombreHerramienta,
             nombreTipo: herramienta.nombreTipo,
-            urlHerramienta:  ""
+            urlHerramienta:  "",
+            duracion: ""
         }       
     });
 
@@ -37,6 +38,24 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
         console.log(files[0]);
         const formData = new FormData();  
         // Update the formData object
+        //var vid = document.createElement('video');
+        //var fileURL = URL.createObjectURL(files[0]);        
+        //vid.src = fileURL;
+        //vid.ondurationchange = function() {
+        //alert(this.duration);
+       /* console.log(this.duration);
+        let duracion = this.duration;//webm no soportado
+          let hr = Math.floor(duracion / 3600);
+          let min = Math.floor((duracion - (hr*3600))/ 60);
+          let seg = Math.floor(duracion - (hr * 3600) - (min * 60))
+          alert(hr +":"+min+":"+seg);*/
+       /* setDatos({
+          ...datos, 
+              tema: {
+                ...datos.tema,            
+                'duracion': this.duration            
+              }    })
+      };*/
         formData.append(      "video",files[0]    ); 
         const options = {
           onUploadProgress:   (progressEvent) => {
@@ -60,9 +79,11 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
             ...datos, 
                 tema: {
                   ...datos.tema,
-                  'urlHerramienta': res.data.path
+                  'urlHerramienta': res.data.path,                  
+                  'formatoHerramienta': files[0].type,
+                  'duracion': res.data.Duration 
                 }    })
-          console.log(urlVideo);      
+          //console.log(urlVideo);      
         })
         .catch(err =>{
           console.log(err);
@@ -143,7 +164,7 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
           }    })
 }
     return ( <React.Fragment>
-        {true === true &&
+        
         <form className="form-horizontal card2" onSubmit={manejadorSubmit}>
             <div className="row card-body">
                 <hr/>
@@ -176,7 +197,7 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
             <label className="col-md-3 form-control-label">Subir video</label>
             <div className="col-md-9">
                            
-            <input type="file" name="video" accept="video/mp4,video/x-m4v,video/*" onChange={uploadVideo} onClick={e => (e.target.value = null)} />           
+            <input type="file" name="video" accept="video/mp4,video/ogg,video/webm" onChange={uploadVideo} onClick={e => (e.target.value = null)} />           
             {porcentajeSubidoVideo > 0 &&<React.Fragment><div className="row"><div className="progress col-md-6"><div className="progress-bar" style={{"width":porcentajeSubidoVideo+"%"}}>{porcentajeSubidoVideo}</div>
             </div>
                           <div className="col-md-3 ">
@@ -199,7 +220,7 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
                             <button type="button" className="btn btn-info" onClick={previsualizarVideo}>{prevVideo ?  "Ocultar Video" : "Previsualizar Video"}</button>                         
                           </div>
               </div>}
-              {prevVideo  == true && <div className="form-group row">
+              {prevVideo  === true && <div className="form-group row">
             <div className="col-md-12">
               <div className="embed-responsive embed-responsive-16by9">
               <video src={urlVideo} controls>
@@ -225,7 +246,7 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
            }
                 </div>
                 </div>
-                  </form>}
+                  </form>
                 
                   
             </React.Fragment>  );

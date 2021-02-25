@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import AlertaContext from "../../context/alerta/alertaContext";
+
 import CursosContext from "../../context/cursos/cursosContext";
 import AgregarVideo from "./agregarVideo";
 import EditarDoc from "./editarDoc";
@@ -8,8 +8,8 @@ import SubTemaCursoEditar from "./subTemaCursoEditar";
 const ListadoSubTema = ({subTema}) => {
   const cursosContext =  useContext(CursosContext);
   const {  eliminarHerramientaCurso, eliminarHerramientaDocCurso, eliminarSubTemaCurso} = cursosContext;
-  const alertaContext = useContext(AlertaContext);
-  const {alerta, mostrarAlerta}  = alertaContext;
+  
+  
   const [mostrarFormVideo, setMostrarFormVideo] = useState(0);
   const [mostrarFormDoc, setMostrarFormDoc]  = useState(0);
   const [mostrarFormAgregarDoc, setMostrarFormAgregarDoc]  = useState(0);
@@ -92,7 +92,7 @@ const ListadoSubTema = ({subTema}) => {
           <h5 className="card-title"><p >Video:</p> </h5>          
           <div className="card-body">
           <p className="card-text"></p>
-          { videosA[i].urlHerramienta != "" ? <video  src={videosA[i].urlHerramienta}  controls width="200" height="200">Tu navegador no admite el elemento <code>video</code></video> 
+          { videosA[i].urlHerramienta !== "" ? <video  src={videosA[i].urlHerramienta}  controls width="200" height="200">Tu navegador no admite el elemento <code>video</code></video> 
           :
           <p className="card-text">No se encontro video</p>
            }
@@ -264,7 +264,7 @@ const ListadoSubTema = ({subTema}) => {
 </div>
 </div>  
 
-{ mostrarFormSubTemaEditar == `SubTemaCursoEditar${subTema.subTemaCurso.idSubTema}`  &&
+{ mostrarFormSubTemaEditar === `SubTemaCursoEditar${subTema.subTemaCurso.idSubTema}`  &&
 <SubTemaCursoEditar  idSubTema = {subTema.subTemaCurso.idSubTema } nombreSubT = {subTema.subTemaCurso.nombreSubTema } idTema = {subTema.subTemaCurso.idTema} ocultarFormSubTemaEdita= {ocultarFormSubTemaEdita} />}
  </div>
  

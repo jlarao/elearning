@@ -1,6 +1,10 @@
 import React, {useState} from 'react';
-import { useSelector } from "react-redux";
-const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo,btnSetPrimerVideo}) => {
+//import {  useDispatch } from "react-redux";
+//import { setPrimerVideo } from "../../actions/cursoReproductorActions";
+const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo}) => {
+    //const dispatch = useDispatch();
+    //const setPrimerVideoReproducir = e => dispatch(setPrimerVideo(e));
+     
     const [first,setfirst] = useState(true);
     //<!-- Preloader Starts -->
     if(curso === null) return (        
@@ -38,7 +42,8 @@ const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo,btnSetPri
                         return(
                             <div className="single-course-video-pdf" key={"idHerramienta"+h.idHerramientaCurso}>
                         <button className="button-video-pdf">
-                            <i className="fa fa-file-pdf"></i> {h.nombreHerramienta}
+                        <a target="_blank" download href={h.urlHerramienta} ><i className="fa fa-file-pdf"></i> {h.nombreHerramienta}
+                            </a>
                         </button>
                         
                     </div>
@@ -55,7 +60,7 @@ const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo,btnSetPri
                             <button  className="button-video" onClick={ ()=>{btnSetVideoReroducir(h.idHerramientaCurso)} }>
                                 <i className="fa fa-play-circle"></i> {s.subTemaCurso.nombreSubTema}
                             </button>
-                            <span>02:50</span>
+                            <span>{h.duracion}</span>
                         </div>
                             )
                         }
@@ -73,7 +78,7 @@ const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo,btnSetPri
     //console.log(cont);
     //console.log(videoPrimero);
     });    
-    btnSetPrimerVideo(videoPrimero);
+    
     /**
        {subTemas.map(s => {
             if(s.subTemaCurso.idTema === tema.idTema  ){

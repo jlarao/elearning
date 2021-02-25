@@ -1,11 +1,11 @@
-import React, { Component, useContext, useEffect } from "react";
+import React, {  useContext, useEffect } from "react";
 import avatar from "../assets/img/avatar-6.jpg";
-import {Route, NavLink, HashRouter} from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import AuthContext  from "../context/authentication/authContext";
 
 function Navbar() {
   const authContext  = useContext(AuthContext);
-  const { usuario, autenticado, usuarioAutenticado, cerrarSesion} = authContext;
+  const { usuarioLogin, autenticado, usuarioAutenticado, cerrarSesion} = authContext;
 
   
    
@@ -38,7 +38,7 @@ function Navbar() {
               </div>
             </form>
           </li>
-          {usuario ? (<React.Fragment><li className="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle text-gray-400 px-1"><i className="fa fa-bell"></i><span className="notification-icon"></span></a>
+          {usuarioLogin ? (<React.Fragment><li className="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle text-gray-400 px-1"><i className="fa fa-bell"></i><span className="notification-icon"></span></a>
             <div aria-labelledby="notifications" className="dropdown-menu"><a href="#" className="dropdown-item">
                 <div className="d-flex align-items-center">
                   <div className="icon icon-sm bg-violet text-white"><i className="fab fa-twitter"></i></div>
@@ -68,7 +68,7 @@ function Navbar() {
             </div>
           </li>
           <li className="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle"><img src={avatar} alt="Jason Doe" style={styleli} className="img-fluid rounded-circle shadow"/></a>
-            <div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboard" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuario.firstname }</strong><small>{ usuario.lastname }</small></NavLink>
+            <div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboard" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuarioLogin.firstname }</strong><small>{ usuarioLogin.lastname }</small></NavLink>
               <div className="dropdown-divider"></div><a href="#" className="dropdown-item">Settings</a><a href="#" className="dropdown-item">Activity log       </a>
               <div className="dropdown-divider"></div><button  className="dropdown-item" onClick={()=>{cerrarSesion()}}><div className="dropdown-item">Cerrar Sesión</div></button>
             </div>

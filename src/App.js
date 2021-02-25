@@ -9,6 +9,7 @@ import Registrar from "./layouts/Registrar";
 import CursoAlta from "./layouts/CursoAlta";
 import RegistroExitoso from "./layouts/RegistroExitoso";
 import Dashboard from './components/dashboard';
+import DashboardAlumno from './components/dashboardAlumno'
 import RutaPrivada from "./components/rutas/RutaPrivada";
 import CursoDetalles from "./components/cursoDetalles";
 import Reproducir from "./components/reproductor/reproducir";
@@ -45,10 +46,11 @@ function App() {
         <Route path="/registrar" component={Registrar}/>
         <Route path="/registroexitoso" component={RegistroExitoso}/>
         <CursosState>
-          <RutaPrivada exact path="/dashboard" component={Dashboard}/>        
+          <RutaPrivada exact path="/dashboardP" component={Dashboard}/>        
+          <RutaPrivada exact path="/dashboardA" component={DashboardAlumno}/>        
           <Route path="/curso-alta" component={CursoAlta}/>
-          <Route path="/curso-detalles/:courseid" component={CursoDetalles}/>
-          <Route path="/curso-tomar/:courseid" component={Reproducir}/>
+          <RutaPrivada exact path="/curso-detalles/:courseid" component={CursoDetalles}/>
+          <RutaPrivada exact path="/curso-tomar/:courseid" component={Reproducir}/>
         </CursosState>
     </div>
     </Provider>

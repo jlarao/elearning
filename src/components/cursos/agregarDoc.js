@@ -24,7 +24,7 @@ const AgregarDoc = ({ocultarFormAgregarDoc, idTema}) => {
     const { tema} = datos;
     const {nombreHerramienta } = tema;
     const [porcentajeSubidoPdf, setporcentajeSubidoPdf] = useState(0);
-    const [pdf, setPdf] = useState(null);
+    
     const [urlPdf, setUrlPdf] = useState(null);
     const [prevPdf, setPrevPdf] = useState(false);
 
@@ -133,7 +133,7 @@ const AgregarDoc = ({ocultarFormAgregarDoc, idTema}) => {
 
   
     return ( <React.Fragment>
-        {true === true &&
+        
         <form className="form-horizontal card2" onSubmit={manejadorSubmit}>
             <div className="row card-body">
                 <hr/>
@@ -193,7 +193,7 @@ const AgregarDoc = ({ocultarFormAgregarDoc, idTema}) => {
            }
                 </div>
                 </div>
-                  </form>}
+                  </form>
                 
                   
             </React.Fragment>  );

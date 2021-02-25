@@ -1,4 +1,4 @@
-import React,{useState, useEffect, useRef, useContext} from 'react';
+import React,{useState, useEffect,  useContext} from 'react';
 import AlertaContext from "../context/alerta/alertaContext";
 import CursosContext from "../context/cursos/cursosContext";
 import TemaCurso from './cursos/temaCurso';
@@ -10,17 +10,13 @@ const  CursoDetalles = (props) =>{
   const cursosContext =  useContext(CursosContext);
   const {  mensaje, subTemasCurso, temasCurso,formTemaCurso , nombreCurso,  
     obtenerCursosPorId, mostrarFormTemaCurso,obtenerTemaCursoPorIdCurso,setIdTema,
-    obtenerSubTemasByTemaCursoId, obtenerSubTemasByTemaId, eliminarTemaCurso} = cursosContext;
+     obtenerSubTemasByTemaId, eliminarTemaCurso} = cursosContext;
   const alertaContext = useContext(AlertaContext);
   const {alerta, mostrarAlerta}  = alertaContext;
   
   const [temaForm, setTemaForm] = useState(0);
   const [subTemaForm, setSubTemaForm] = useState(0);
-    const [datos, setDatos] = useState({
-      tema:{ nombre:"", agregarVideo:"", url:"", urlPdf:""},
-      error: false,
-      errorMsg: ""      
-      });
+    
            
 
     useEffect(() => {        
@@ -85,7 +81,7 @@ const  CursoDetalles = (props) =>{
       
     </div>
     </div>
-    <div id={"collapse"+i}  className={i!=0 ? "collapse" : "collapse"}    data-parent="#accordionTema">
+    <div id={"collapse"+i}  className={i!==0 ? "collapse" : "collapse"}    data-parent="#accordionTema">
       <div className="card-body">          
       
       
@@ -102,7 +98,7 @@ const  CursoDetalles = (props) =>{
       </div>
 
 
-      {subTemaForm==id ? <SubTemaCurso  btnSubTemaOcultarForm={btnSubTemaOcultarForm} idTema={id} /> : null}
+      {subTemaForm===id ? <SubTemaCurso  btnSubTemaOcultarForm={btnSubTemaOcultarForm} idTema={id} /> : null}
       
 
       <div className="col-lg-12 text-right mb-4"><button className ="btn btn-info" onClick={ ()=>{btnSubTemaAgregar(id)}} title="Agregar contenido"><i className="fas fa-plus ml-auto" ></i></button></div>
@@ -110,12 +106,12 @@ const  CursoDetalles = (props) =>{
     </div>
   </div>
 
-{temaForm  == `tema${id}` ? <TemaCursoEditar btnTemaOcultarForm={btnTemaOcultarForm} idTema={id} nombreTem ={nombreTema}/> : null }
+{temaForm  === `tema${id}` ? <TemaCursoEditar btnTemaOcultarForm={btnTemaOcultarForm} idTema={id} nombreTem ={nombreTema}/> : null }
 </React.Fragment>);
 }
 
   const btnTemaCursoAgregar = ()=>{
-    let cambiar = !formTemaCurso;
+    //let cambiar = !formTemaCurso;
     console.log(formTemaCurso);
     mostrarFormTemaCurso(true);
   }
@@ -128,7 +124,7 @@ const  CursoDetalles = (props) =>{
             <p></p>
         </div>
         <div className="row">
-            <h3></h3>
+            <h3>&nbsp;{" "}</h3>
         </div>
          
         <div className="row">

@@ -6,21 +6,50 @@ import VideoPlayerUrl from "./video";
 //actions redux
 import  { obtenerCursoContenidoReproductor } from "../../actions/cursoReproductorActions";
 const Reproducir = (props) => {
+    const [mostrarReproductorVideo, setMostrarReproductorVideo] = useState(0);   
     //redux
     const dispatch = useDispatch();
     //state curs reproductor
     const curso = useSelector(state => state.cursoReproductor.curso);
     const temas = useSelector(state => state.cursoReproductor.temas);
     const subTemas  = useSelector(state => state.cursoReproductor.subTemas);
-    useEffect(() => {
-        const obtenerContenido = e => dispatch( obtenerCursoContenidoReproductor(e) );
-        obtenerContenido(props.match.params.courseid);
+    const obtenerContenido = e => dispatch( obtenerCursoContenidoReproductor(e) );
+    //const primerVideoR = useSelector( state => state.cursoReproductor.primerVideo);
+    useEffect(() => {        
+        obtenerContenido(props.match.params.courseid);        
+        primerVideoReproductor();
     }, [])
-    //console.log(curso);
-    //state
-    
-    
-    
+    const primerVideoReproductor=()=>{
+        var contPrimerVideo = 0;
+        var videoPrimero;
+        console.log(temas.length);
+        if(temas.length>0){
+        temas.map(tema => {        
+            {subTemas.map(s => {
+                if(s.subTemaCurso.idTema === tema.idTema  ){
+                    return s.herramientasubTema.map(h => {
+                    if(h.nombreTipo !== "pdf"){
+                        let url = h.urlHerramienta;                       
+                        if(h.agregarVideo==="agregarVideo"){
+                            if(h.agregarVideo==="agregarVideo"){
+                                if(contPrimerVideo== 0 ){
+                                    videoPrimero = h;
+                                    contPrimerVideo=1;
+                                }
+                                return( null )
+                            }
+                        }                                           
+                    }
+                    }
+                    )
+                }else return null;
+            })
+            }
+        });
+        setMostrarReproductorVideo(videoPrimero.idHerramientaCurso);
+    }
+    }
+        
     /*
     <ul className="nav nav-tabs">
                         <li className="nav-item">
@@ -38,16 +67,12 @@ const Reproducir = (props) => {
                         <div className="tab-pane container fade" id="menu1c">Menu 1</div>
                         <div className="tab-pane container fade" id="menu2c">Menu 2</div>
                         </div>
-    */
-   const [mostrarReproductorVideo, setMostrarReproductorVideo] = useState(0);
-   const [primerVideo, setPrimerVideo] = useState(0);
+    */   
+   
    const btnSetReproductorVideo= (e)=>{
        setMostrarReproductorVideo(e);
-   }
-   const btnSetPrimerVideo= (e)=>{
-       setPrimerVideo(e);
-       console.log(e);
-   }
+   }   
+   
    const ReproductoresVideos=[];
     temas.map(tema => {
         
@@ -56,6 +81,8 @@ const Reproducir = (props) => {
                 return s.herramientasubTema.map(h => {
                     if(h.nombreTipo !== "pdf"){
                         let url = h.urlHerramienta;                       
+                        if(h.agregarVideo==="agregarVideo"){
+                            
                         return(
                             ReproductoresVideos.push(
                                 <React.Fragment key={h.idHerramientaCurso}>
@@ -63,13 +90,15 @@ const Reproducir = (props) => {
                                        </React.Fragment>        
                             )
                         )
-                    }                                            
+                    } }                                           
                 })
             }else return null;
             })
         }
     
-    }); 
+    });
+
+
     return (
         <div className="page-holder w-100 d-flex flex-wrap">
         <div className="container-fluid px-xl-5">         
@@ -77,7 +106,7 @@ const Reproducir = (props) => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-8 p-0 order-2 order-lg-1">                        
-                        {mostrarReproductorVideo === 0 ? < VideoPlayerUrl url={primerVideo.urlHerramienta}/> : null}
+                        
                         {ReproductoresVideos}
                         <div className="course-video-tab padding-top-60">
 
@@ -86,7 +115,7 @@ const Reproducir = (props) => {
                         </div>
                     </div>
                     <div className="col-lg-4 p-0 order-1 order-lg-2">
-                        <ListadoVideos curso={curso} temas={temas} subTemas={subTemas}  btnSetReproductorVideo={btnSetReproductorVideo} btnSetPrimerVideo={btnSetPrimerVideo}/>
+                        <ListadoVideos curso={curso} temas={temas} subTemas={subTemas}  btnSetReproductorVideo={btnSetReproductorVideo}/>
                     </div>
                 </div>
             </div>

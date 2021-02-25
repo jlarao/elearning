@@ -6,7 +6,7 @@ import AlertaContext from "../context/alerta/alertaContext";
 
 const Login = (props) => {
   const authContext = useContext(AuthContext);
-  const { mensaje, iniciarSesion, autenticado }  = authContext;
+  const { usuarioLogin, mensaje, iniciarSesion, autenticado }  = authContext;
   const alertaContext = useContext(AlertaContext);
   const {alerta, mostrarAlerta}  = alertaContext;
 
@@ -25,12 +25,23 @@ const {errorb, errorMsg} = error;
 
 useEffect(()=> {
   if(autenticado){
-    props.history.push("/dashboard");
+    //props.history.push("/dashboard");
+    
+    if(usuarioLogin){
+      console.log(usuarioLogin.idRol);
+      if(usuarioLogin.idRol=="2"){
+        console.log("peofesor");
+        props.history.push("/dashboardP");
+      }else{
+        console.log("alumno");
+        props.history.push("/dashboardA")
+      }
+    }
   }
   if(mensaje){
     mostrarAlerta(mensaje.msg, mensaje.categoria);
   }
-}, [autenticado , mensaje , props.history])
+}, [usuarioLogin, autenticado , mensaje , props.history])
     const manejadorSubmit = e =>{
         e.preventDefault();
     }
@@ -43,7 +54,7 @@ useEffect(()=> {
     }
 
     const manejadorBoton = ()=>{      
-      console.log(login);
+      //console.log(login);
 
       if(usuario.trim()===""){
         guardarError({

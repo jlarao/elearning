@@ -23,7 +23,7 @@ const EditarDoc = ({ocultarFormEdicDoc, herramienta}) => {
     const { tema} = datos;
     const {nombreHerramienta } = tema;
     const [porcentajeSubidoPdf, setporcentajeSubidoPdf] = useState(0);
-    const [pdf, setPdf] = useState(null);
+    
     const [urlPdf, setUrlPdf] = useState(null);
     const [prevPdf, setPrevPdf] = useState(false);
 
@@ -132,7 +132,7 @@ const EditarDoc = ({ocultarFormEdicDoc, herramienta}) => {
 
   
     return ( <React.Fragment>
-        {true === true &&
+        
         <form className="form-horizontal card2" onSubmit={manejadorSubmit}>
             <div className="row card-body">
                 <hr/>
@@ -192,7 +192,7 @@ const EditarDoc = ({ocultarFormEdicDoc, herramienta}) => {
            }
                 </div>
                 </div>
-                  </form>}
+                  </form>
                 
                   
             </React.Fragment>  );

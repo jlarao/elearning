@@ -85,7 +85,7 @@ import {
 //usuario authenticado
     const usuarioAutenticado = async() =>{
         const token = localStorage.getItem('token');
-        console.log(token);
+        //console.log(token);
         if(token){
             //enviar token por header
             tokenAuth(token);
@@ -173,7 +173,7 @@ import {
             <AuthContext.Provider
             value={{token : state.token,
                 autenticado: state.autenticado,
-                usuario: state.usuario,
+                usuarioLogin: state.usuario,
                 mensaje: state.mensaje,
                 cargando: state.cargando,
                 registroexitoso: state.registroexitoso,

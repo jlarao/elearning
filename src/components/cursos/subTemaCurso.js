@@ -1,8 +1,7 @@
 import React, {useState, useRef, useContext} from 'react';
 import axios, {CancelToken, isCancel} from "axios";
 import CursosContext from "../../context/cursos/cursosContext";
-import clienteAxios from "../../config/axios"
-import tokenAuth from "../../config/token";
+
 
 const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
     const cursosContext =  useContext(CursosContext);
@@ -10,11 +9,11 @@ const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
 
     const [urlPdf, setUrlPdf] = useState(null);
     const [prevPdf, setPrevPdf] = useState(false);
-    const [video, setVideo] = useState(null);
+    
     const [urlVideo, setUrlVideo] = useState(null);
     const [porcentajeSubidoVideo, setporcentajeSubidoVideo] = useState(0);  
     const [porcentajeSubidoPdf, setporcentajeSubidoPdf] = useState(0);
-    const [pdf, setPdf] = useState(null);
+    
     const [radioVideo, setRadioVideo] = useState(null);
     const [prevVideo, setPrevVideo] = useState(false);
 
@@ -32,7 +31,8 @@ const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
           tituloVideo: "",
           urlPdf: "",
           tituloDocumento: "",
-          idTema: idTema
+          idTema: idTema,
+          duracion: ""
         }       
     });
 
@@ -75,7 +75,9 @@ const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
             ...datos, 
                 tema: {
                   ...datos.tema,
-                  'url': res.data.path
+                  'url': res.data.path,
+                  'duracion': res.data.Duration,
+                  'formatoHerramienta': files[0].type
                 }    })
           console.log(urlVideo);      
         })
@@ -250,7 +252,7 @@ const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
 }
 
     return ( <React.Fragment>
-        {true === true &&
+        
         <form className="form-horizontal card2" onSubmit={manejadorSubmit}>
             <div className="row card-body">
                 <hr/>
@@ -288,7 +290,7 @@ const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
             <label className="col-md-3 form-control-label">Subir video</label>
             <div className="col-md-9">
                            
-            <input type="file" name="video" accept="video/mp4,video/x-m4v,video/*" onChange={uploadVideo} onClick={e => (e.target.value = null)} />           
+            <input type="file" name="video" accept="video/mp4,video/ogg,video/webm" onChange={uploadVideo} onClick={e => (e.target.value = null)} />           
             {porcentajeSubidoVideo > 0 &&<React.Fragment><div className="row"><div className="progress col-md-6"><div className="progress-bar" style={{"width":porcentajeSubidoVideo+"%"}}>{porcentajeSubidoVideo}</div>
             </div>
                           <div className="col-md-3 ">
@@ -311,7 +313,7 @@ const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
                             <button type="button" className="btn btn-info" onClick={previsualizarVideo}>{prevVideo ?  "Ocultar Video" : "Previsualizar Video"}</button>                         
                           </div>
               </div>}
-              {prevVideo  == true && <div className="form-group row">
+              {prevVideo  === true && <div className="form-group row">
             <div className="col-md-12">
               <div className="embed-responsive embed-responsive-16by9">
               <video src={urlVideo} controls>
@@ -369,7 +371,7 @@ const SubTemaCurso = ({idTema, btnSubTemaOcultarForm}) => {
                {datos.errorMsg}
              </div>
            }
-                  </form>}
+                  </form>
                   
                   
             </React.Fragment> );

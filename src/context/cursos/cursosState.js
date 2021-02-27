@@ -33,9 +33,14 @@ const CursosState = props => {
     const initialState = {
         id: null,
         nombreCurso:"",
+        idCategoria:0,
         categoria:"",
         duracion:"",        
         poster:"",
+        descripcion:"",
+        requisitos:"",
+        que_aprenderas:"",
+        idCategoria: 0,
         mensaje:"",
         fechaRegistro:"",
         mensaje:"",
@@ -93,6 +98,46 @@ const CursosState = props => {
                     "categoria": curso.categoria,                    
                     "poster": curso.poster,
                     "duracion": ""
+                }               
+                //props.history.push("/curso-detalles/"+response.data.idCurso)
+                dispatch({
+                    type: CURSOS_AGREGAR,
+                    payload: c
+                })                                                          
+            } catch (error) {                             
+                console.log(error);
+                    // client received an error response (5xx, 4xx)
+                    const alerta =  {
+                        msg: `error al conectar al api ${error.response.data.message}`,
+                        categoria :'danger'
+                    }
+                    dispatch({
+                        type: CURSOS_ERROR,
+                        payload: alerta
+                    })                                                         
+            }            
+        }
+
+        const editarCurso = async(curso) => { 
+            console.log(curso);
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }              
+            try {
+                const response = await clienteAxios.put("cursos", curso);
+                console.log(response.data); 
+                const c = {
+                    "id": curso.idCurso,
+                    "nombreCurso": curso.nombre,
+                    "categoria": curso.categoria,                    
+                    "poster": curso.poster,
+                    "duracion": "",
+                    "idCategoria": curso.idCategoria ,
+                    "descripcion": curso.descripcion,
+                    "requisitos": curso.requisitos,
+                    "que_aprenderas": curso.que_aprenderas
                 }               
                 //props.history.push("/curso-detalles/"+response.data.idCurso)
                 dispatch({
@@ -598,6 +643,11 @@ const CursosState = props => {
                 formSubTema: state.formSubTema,                
                 idTema: state.idTema,
                 subTemasCurso: state.subTemasCurso,
+                descripcion:state.descripcion,
+                requisitos:state.requisitos,
+                que_aprenderas:state.que_aprenderas,
+                poster:state.poster,
+                idCategoria: state.idCategoria,
                 obtenerCursosUsuarioInstructor,
                 agregarCurso,
                 obtenerCursosPorId,
@@ -617,7 +667,8 @@ const CursosState = props => {
                 editarSubTemaCurso,
                 eliminarSubTemaCurso,
                 editarTemaCurso,
-                eliminarTemaCurso
+                eliminarTemaCurso,
+                editarCurso
                 }}
         >
             {props.children}

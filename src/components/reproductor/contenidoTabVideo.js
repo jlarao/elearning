@@ -5,24 +5,24 @@ const ContenidoTabVideo = () => {
 
         <React.Fragment>
             <div className="tab">
-                <ul className="nav nav-tabs"> 
+                <ul className="nav nav-tabs" id="myTab" role="tablist"> 
                     <li className="nav-item">
-                    <a className="nav-link active" data-toggle="tab" href="#home"><span>overview</span></a>
+                    <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home"  role="tab" aria-controls="home" aria-selected="true"><span>Resumen</span></a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" data-toggle="tab" href="#menu1"><span><span>Q&A</span></span></a>
+                    <a className="nav-link" id="menu1-tab" data-toggle="tab" href="#menu1" role="tab" aria-controls="menu1" aria-selected="false"><span><span>Preguntas</span></span></a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" data-toggle="tab" href="#menu2"><span><span>note</span></span></a>
+                    <a className="nav-link" id="menu2-tab" data-toggle="tab" href="#menu2" role="tab" aria-controls="menu2" aria-selected="false"><span><span>Notas</span></span></a>
                     </li>
                     <li className="nav-item">
-                    <a className="nav-link" data-toggle="tab" href="#menu3"><span><span>announcement</span></span></a>                                        
+                    <a className="nav-link" id="menu3-tab" data-toggle="tab" href="#menu3" role="tab" aria-controls="menu3" aria-selected="false"><span><span>Anuncios</span></span></a>                                        
                     </li>
                 </ul>
                 <div className="hr-line"></div>
             </div>
             <div className="tab-content">
-                                <div className="tab-pane container" id="home">
+                                <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div className="video-tab-title">
                                         <h5>about this course</h5>
                                     </div>
@@ -95,7 +95,7 @@ const ContenidoTabVideo = () => {
                                     </ul>
                                 </div>
 
-                                <div className="tab-pane container fade tab-two-content tab-content-bg q-a-content lost" id="menu1">
+                                <div className="tab-pane container fade tab-two-content tab-content-bg q-a-content lost" id="menu1"role="tabpanel" aria-labelledby="menu1-tab">
                                     <div className="header-search">
                                         <form action="#">
                                             <input type="text" placeholder="Search Question"/>
@@ -164,7 +164,7 @@ const ContenidoTabVideo = () => {
                                     </div>
                                 </div>
 
-                                <div className="tab-pane container fade tab-three-content tab-content-bg note-content lost" id="menu2">
+                                <div className="tab-pane  fade tab-three-content tab-content-bg note-content lost" id="menu2" role="tabpanel" aria-labelledby="menu2-tab">
                                     <div className="header-search">
                                         <form action="#">
                                             <input type="text" placeholder="Create New Note"/>
@@ -174,7 +174,7 @@ const ContenidoTabVideo = () => {
                                     <span>Click the "Create a new note" box, the "+" button, or press "N" to make your first note.</span>
                                 </div>
 
-                                <div className="tab-pane container fade tab-four-content tab-content-bg announcement-content lost" id="menu3">
+                                <div className="tab-pane  fade tab-four-content tab-content-bg announcement-content lost" id="menu3" role="tabpanel" aria-labelledby="menu3-tab">
                                     <div className="announcement-top">
                                         <div className="top-image">
                                             <img src="https://placeimg.com/100/100/people?tutors-15" alt="image"/>

@@ -30,7 +30,7 @@ function Dashboard() {
           </div>
         </div>
         <div className="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-violet">                        
-          <Link to={"/curso-detalles/"+cursos[i].idCurso}><button type="button" className="ml-2 btn btn-info">Editar Curso</button></Link>
+          <Link to={"/curso-editar/"+cursos[i].idCurso}><button type="button" className="ml-2 btn btn-info">Editar Curso</button></Link>
         </div>
       </div>
     )

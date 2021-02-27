@@ -13,12 +13,15 @@ const Reproducir = (props) => {
     const curso = useSelector(state => state.cursoReproductor.curso);
     const temas = useSelector(state => state.cursoReproductor.temas);
     const subTemas  = useSelector(state => state.cursoReproductor.subTemas);
+    const loading   = useSelector(state => state.cursoReproductor.loading);
     const obtenerContenido = e => dispatch( obtenerCursoContenidoReproductor(e) );
     //const primerVideoR = useSelector( state => state.cursoReproductor.primerVideo);
     useEffect(() => {        
-        obtenerContenido(props.match.params.courseid);        
-        primerVideoReproductor();
-    }, [])
+        if(loading==="inicio")
+            obtenerContenido(props.match.params.courseid);        
+        if(loading==="finalizado")
+            primerVideoReproductor();
+    }, [loading])
     const primerVideoReproductor=()=>{
         var contPrimerVideo = 0;
         var videoPrimero;

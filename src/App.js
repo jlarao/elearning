@@ -9,10 +9,12 @@ import Registrar from "./layouts/Registrar";
 import CursoAlta from "./layouts/CursoAlta";
 import RegistroExitoso from "./layouts/RegistroExitoso";
 import Dashboard from './components/dashboard';
+import DashboardAdmin from './components/dashboardAdmin';
 import DashboardAlumno from './components/dashboardAlumno'
 import RutaPrivada from "./components/rutas/RutaPrivada";
-import CursoDetalles from "./components/cursoDetalles";
+import CursoEditar from "./components/cursoEditar";
 import Reproducir from "./components/reproductor/reproducir";
+import Course from "./components/cursos/curso/course";
 
 import AuthState from "./context/authentication/authState";
 import AlertasState from "./context/alerta/alertaState";
@@ -45,11 +47,13 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/registrar" component={Registrar}/>
         <Route path="/registroexitoso" component={RegistroExitoso}/>
-        <CursosState>
+        <Route path="/course/:courseid" component={Course} />
+        <CursosState>          
+        <RutaPrivada exact path="/dashboardAdmin" component={DashboardAdmin}/>
           <RutaPrivada exact path="/dashboardP" component={Dashboard}/>        
           <RutaPrivada exact path="/dashboardA" component={DashboardAlumno}/>        
-          <Route path="/curso-alta" component={CursoAlta}/>
-          <RutaPrivada exact path="/curso-detalles/:courseid" component={CursoDetalles}/>
+          <RutaPrivada exact path="/curso-alta" component={CursoAlta}/>
+          <RutaPrivada exact path="/curso-editar/:courseid" component={CursoEditar}/>
           <RutaPrivada exact path="/curso-tomar/:courseid" component={Reproducir}/>
         </CursosState>
     </div>

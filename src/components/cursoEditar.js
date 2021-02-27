@@ -5,10 +5,13 @@ import TemaCurso from './cursos/temaCurso';
 import SubTemaCurso from './cursos/subTemaCurso';
 import ListadoSubTema from "./cursos/listadoSubTema";
 import TemaCursoEditar from "./cursos/temaCursoEditar";
-const  CursoDetalles = (props) =>{   
+import CursoContenidoEditar from "./cursos/cursoContenidoEditar";
+import Preloader from "./cursos/curso/preloader";
+const  CursoEditar = (props) =>{   
   
   const cursosContext =  useContext(CursosContext);
-  const {  mensaje, subTemasCurso, temasCurso,formTemaCurso , nombreCurso,  
+  const {  id, idCategoria, poster, nombreCurso,descripcion,requisitos,que_aprenderas, 
+    mensaje, subTemasCurso, temasCurso,formTemaCurso ,   
     obtenerCursosPorId, mostrarFormTemaCurso,obtenerTemaCursoPorIdCurso,setIdTema,
      obtenerSubTemasByTemaId, eliminarTemaCurso} = cursosContext;
   const alertaContext = useContext(AlertaContext);
@@ -35,6 +38,10 @@ const  CursoDetalles = (props) =>{
       obtenerSubTemasByTemaId(id);
     }
     
+    if(temasCurso.length === 0)
+    return (
+        <Preloader />
+    );
     const btnSubTemaAgregar =  e =>{
       console.log(e);
       //let cambiar = !formSubTema;
@@ -119,25 +126,27 @@ const  CursoDetalles = (props) =>{
   
     return ( <div className="page-holder w-100 d-flex flex-wrap">
     <div className="container-fluid px-xl-5">
-      <section className="py-5">
+      <section className="pt-5">
         <div className="row">
-            <p></p>
+        <div className="col-lg-12 mb-2">
+              <CursoContenidoEditar nombreC={nombreCurso} id={id} idC={idCategoria} pos={poster} desc={descripcion} 
+              req={requisitos} que_={que_aprenderas}/>
+               
+          </div>
         </div>
-        <div className="row">
-            <h3>&nbsp;{" "}</h3>
-        </div>
+        
          
         <div className="row">
-          <div className="col-lg-12 mb-5">
+          <div className="col-lg-12 mb-0">
             <div className="card">
               <div className="card-header">
                 <div className="row">
-                  <div className="col-lg-9"><h3 className="h6 text-uppercase mb-0">Curso - {nombreCurso}</h3></div> 
+                  <div className="col-lg-9"><h3 className="h6 text-uppercase mb-0">Secciones del curso</h3></div> 
                   <div className="col-lg-3"><button type="button" className="btn btn-primary" onClick={btnTemaCursoAgregar}>Agregar Sección</button></div>
                 </div>
               </div>
               <div className="card-body">
-                <p>Secciones del curso</p>
+                <p></p>
               <div className="card2">
               <div className="card-body">
                 {<TemaCurso />}
@@ -175,4 +184,4 @@ const  CursoDetalles = (props) =>{
       </div> );
 }
  
-export default CursoDetalles
+export default CursoEditar

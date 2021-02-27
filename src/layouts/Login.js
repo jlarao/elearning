@@ -29,8 +29,12 @@ useEffect(()=> {
     
     if(usuarioLogin){
       console.log(usuarioLogin.idRol);
-      if(usuarioLogin.idRol=="2"){
-        console.log("peofesor");
+      if(usuarioLogin.idRol=="1"){
+        console.log("admin");
+        props.history.push("/dashboardAdmin");
+      }
+      else if(usuarioLogin.idRol=="2"){
+        console.log("profesor");
         props.history.push("/dashboardP");
       }else{
         console.log("alumno");

@@ -1,11 +1,9 @@
 import React, { useEffect, useContext }  from 'react';
-import {useDispatch, useSelector} from "redux";
-import { obtenerCursosUsuarioAlumno } from "../actions/cursoReproductorActions";
 
 import AuthContext  from "../context/authentication/authContext";
 import CursosContext from "../context/cursos/cursosContext";
 import { Link } from "react-router-dom";
-function DashboardAlumno() {
+function DashboardAdmin() {
 
   //info authentication
   const authContext  = useContext(AuthContext);
@@ -16,7 +14,7 @@ function DashboardAlumno() {
 
   useEffect(() => {
     usuarioAutenticado();
-    console.log("dashboard");
+    console.log("dashboardAdmin");
     obtenerCursosUsuarioInstructor();
   }, []);
 
@@ -61,7 +59,7 @@ function DashboardAlumno() {
               <div className="col-lg-8">
                 <div className="card mb-5 mb-lg-0">
                   <div className="card-header">
-                    <h2 className="h6 mb-0 text-uppercase">Cursos comprados</h2>
+                    <h2 className="h6 mb-0 text-uppercase">Cursos como instructor</h2>
                   </div>
                   <div className="card-body">
                     <p className="text-gray mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -107,6 +105,6 @@ function DashboardAlumno() {
      )
 }
 
-export default DashboardAlumno;
+export default DashboardAdmin;
 
 

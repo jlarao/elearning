@@ -52,7 +52,11 @@ export default (state, action) =>{
                 nombreCurso: action.payload.nombreCurso,                
                 duracion: action.payload.duracion,        
                 poster: action.payload.poster,                
-                fechaRegistro: action.payload.fechaRegistro
+                fechaRegistro: action.payload.fechaRegistro,
+                descripcion:action.payload.descripcion,
+                requisitos:action.payload.requisitos,
+                que_aprenderas:action.payload.que_aprenderas,
+                idCategoria: action.payload.idCategoria
 
             }
         case CURSOS_FORM_TEMACURSO:

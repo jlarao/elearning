@@ -5,6 +5,7 @@ import {REGISTRO_EXITOSO,
     OBTENER_CUSOS_INSTRUCTOR,
     CURSOS_ERROR,
     CURSOS_AGREGAR,
+    CURSOS_EDITAR,
     CURSOS_POR_ID,
     CURSOS_FORM_TEMACURSO,
     CURSOS_GUARDAR_TEMA_CURSO,
@@ -22,13 +23,22 @@ import {REGISTRO_EXITOSO,
     CURSOS_EDITAR_SUBTEMA_CURSO,
     CURSOS_ELIMINAR_SUBTEMA_CURSO,
     CURSOS_EDITAR_TEMA_CURSO,
-    CURSOS_ELIMINAR_TEMA_CURSO
+    CURSOS_ELIMINAR_TEMA_CURSO,
+    LIMPIAR_STATE,
+    LIMPIAR_MENSAJE,
+    LOADING_CURSO,
+    OBTENER_CURSOS_ALUMNO
     
 } from "../../types";
 
 export default (state, action) =>{
     switch(action.type){       
         case OBTENER_CUSOS_INSTRUCTOR:             
+            return{
+                ...state,
+                cursos: action.payload
+            }
+        case OBTENER_CURSOS_ALUMNO:
             return{
                 ...state,
                 cursos: action.payload
@@ -44,6 +54,13 @@ export default (state, action) =>{
                 cursos: [...state.cursos, action.payload],
                 redirect: `/curso-detalles/${action.payload.id}`
             }
+            case CURSOS_EDITAR:
+                //mensaje: action.payload.mensaje
+            return{
+                ...state,
+                cursos: [...state.cursos, action.payload],
+                mensaje: action.payload.mensaje
+            }
         case CURSOS_POR_ID:
             console.log(action.payload.nombreCurso);
             return{
@@ -56,8 +73,9 @@ export default (state, action) =>{
                 descripcion:action.payload.descripcion,
                 requisitos:action.payload.requisitos,
                 que_aprenderas:action.payload.que_aprenderas,
-                idCategoria: action.payload.idCategoria
-
+                idCategoria: action.payload.idCategoria,
+                precio: action.payload.precio,
+                cargando: false
             }
         case CURSOS_FORM_TEMACURSO:
             return{
@@ -237,6 +255,39 @@ export default (state, action) =>{
                     return {                        
                     ...state, temasCurso: state.temasCurso.filter(function(s){return s.idTema !== action.payload })
                     }
+        case LIMPIAR_STATE:
+            return{
+                id: null,
+                nombreCurso:"",
+                idCategoria:0,
+                categoria:"",
+                duracion:"",        
+                poster:"",
+                descripcion:"",
+                requisitos:"",
+                que_aprenderas:"",
+                idCategoria: 0,
+                precio: 0,
+                mensaje:"",
+                fechaRegistro:"",        
+                redirect:null,
+                temasCurso:[],
+                cursos:[],
+                formTemaCurso: false,
+                formSubTema: false,
+                idTema:null,
+                subTemasCurso: []
+            }
+            case LIMPIAR_MENSAJE:
+                return{
+                    ...state,
+                    mensaje: ""
+                }
+        case LOADING_CURSO:
+            return {
+            ...state,
+            cargando: true
+        }
         default: return state;                
                 
     }

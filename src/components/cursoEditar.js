@@ -7,13 +7,14 @@ import ListadoSubTema from "./cursos/listadoSubTema";
 import TemaCursoEditar from "./cursos/temaCursoEditar";
 import CursoContenidoEditar from "./cursos/cursoContenidoEditar";
 import Preloader from "./cursos/curso/preloader";
+import Modal from "./functions/function";
 const  CursoEditar = (props) =>{   
   
   const cursosContext =  useContext(CursosContext);
-  const {  id, idCategoria, poster, nombreCurso,descripcion,requisitos,que_aprenderas, 
+  const {  cargando, precio, id, idCategoria, poster, nombreCurso,descripcion,requisitos,que_aprenderas, 
     mensaje, subTemasCurso, temasCurso,formTemaCurso ,   
     obtenerCursosPorId, mostrarFormTemaCurso,obtenerTemaCursoPorIdCurso,setIdTema,
-     obtenerSubTemasByTemaId, eliminarTemaCurso} = cursosContext;
+     obtenerSubTemasByTemaId, eliminarTemaCurso, limpiarMensaje} = cursosContext;
   const alertaContext = useContext(AlertaContext);
   const {alerta, mostrarAlerta}  = alertaContext;
   
@@ -26,22 +27,33 @@ const  CursoEditar = (props) =>{
         obtenerCursoById(props.match.params.courseid);
         if(mensaje){
           mostrarAlerta(mensaje.msg, mensaje.categoria);
+          console.log(mensaje);
+          tratarMensajes(mensaje)
+          
         }
         //if(temasCurso){
           //guardarSeccion(temasCurso);
         //}
     }, [mensaje])
 
+    const tratarMensajes=()=>{
+      Modal.Toast.show({html: mensaje.msg, mensaje: mensaje});
+      setTimeout( ()=>{ limpiarMensaje() } ,5000 );
+    }
     const obtenerCursoById = async(id) => { 
       obtenerCursosPorId(id);
       obtenerTemaCursoPorIdCurso(id);
       obtenerSubTemasByTemaId(id);
     }
     
-    if(temasCurso.length === 0)
+    if(cargando){
     return (
         <Preloader />
     );
+    }
+
+    
+
     const btnSubTemaAgregar =  e =>{
       console.log(e);
       //let cambiar = !formSubTema;
@@ -130,7 +142,7 @@ const  CursoEditar = (props) =>{
         <div className="row">
         <div className="col-lg-12 mb-2">
               <CursoContenidoEditar nombreC={nombreCurso} id={id} idC={idCategoria} pos={poster} desc={descripcion} 
-              req={requisitos} que_={que_aprenderas}/>
+              req={requisitos} que_={que_aprenderas} precioCurso = {precio}/>
                
           </div>
         </div>
@@ -153,7 +165,7 @@ const  CursoEditar = (props) =>{
 
                 <div className="row">
                   <div className="col-lg-12 mb-5">
-                  {alerta ? <div className={`alert alert-${alerta.categoria}`} role ="alert">{alerta.msg}</div> : null}
+                  
                   <div id="accordionTema">
                           {accordeon}
                       </div>

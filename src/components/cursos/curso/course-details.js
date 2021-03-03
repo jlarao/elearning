@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CourseDetails = () => {
+const CourseDetails = ({ curso }) => {
     return ( 
         <div className="col-lg-4">
                         <div className="course-details-sidebar">
@@ -14,7 +14,7 @@ const CourseDetails = () => {
                                             <span><i className="fa fa-dollar-sign"></i> price</span>
                                         </div>
                                         <div className="item-right">
-                                            <span>$ 200.00</span>
+                                            <span>$ {curso.precio}</span>
                                         </div>
                                     </div>
                                     <div className="single-item">
@@ -22,7 +22,7 @@ const CourseDetails = () => {
                                             <span><i className="fa fa-user-circle"></i> instructor</span>
                                         </div>
                                         <div className="item-right">
-                                            <span>john doe</span>
+                                            <span>{curso.nombre} {curso.apellidoPaterno}</span>
                                         </div>
                                     </div>
                                     <div className="single-item">

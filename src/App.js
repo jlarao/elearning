@@ -36,6 +36,7 @@ function App() {
   return (    
     <AuthState> 
       <AlertasState> 
+      <CursosState>
     <HashRouter>  
       <Provider store={store}>
     <Navbar />  
@@ -48,17 +49,18 @@ function App() {
         <Route path="/registrar" component={Registrar}/>
         <Route path="/registroexitoso" component={RegistroExitoso}/>
         <Route path="/course/:courseid" component={Course} />
-        <CursosState>          
+                 
         <RutaPrivada exact path="/dashboardAdmin" component={DashboardAdmin}/>
           <RutaPrivada exact path="/dashboardP" component={Dashboard}/>        
           <RutaPrivada exact path="/dashboardA" component={DashboardAlumno}/>        
           <RutaPrivada exact path="/curso-alta" component={CursoAlta}/>
           <RutaPrivada exact path="/curso-editar/:courseid" component={CursoEditar}/>
           <RutaPrivada exact path="/curso-tomar/:courseid" component={Reproducir}/>
-        </CursosState>
+        
     </div>
     </Provider>
 </HashRouter> 
+</CursosState>
 </AlertasState>
 </AuthState>
 

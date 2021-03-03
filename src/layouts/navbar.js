@@ -2,13 +2,19 @@ import React, {  useContext, useEffect } from "react";
 import avatar from "../assets/img/avatar-6.jpg";
 import { NavLink} from 'react-router-dom';
 import AuthContext  from "../context/authentication/authContext";
+import CursosContext  from "../context/cursos/cursosContext";
 
 function Navbar() {
   const authContext  = useContext(AuthContext);
-  const { usuarioLogin, autenticado, usuarioAutenticado, cerrarSesion} = authContext;
+  const { usuarioLogin,  usuarioAutenticado, cerrarSesion} = authContext;
 
-  
+  const cursosContext = useContext(CursosContext);
+  const { limpiarState } = cursosContext;
    
+  const cerrarSesionBtn = () =>{
+    cerrarSesion();
+    limpiarState();
+  }
   useEffect(() => {
     //usuarioAutenticado();
     //console.log("autenticado");
@@ -68,10 +74,22 @@ function Navbar() {
             </div>
           </li>
           <li className="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle"><img src={avatar} alt="Jason Doe" style={styleli} className="img-fluid rounded-circle shadow"/></a>
-            <div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboard" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuarioLogin.firstname }</strong><small>{ usuarioLogin.lastname }</small></NavLink>
+            {usuarioLogin.idRol==="1" && (<div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboardAdmin" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuarioLogin.firstname }</strong><small>{ usuarioLogin.lastname }</small></NavLink>
               <div className="dropdown-divider"></div><a href="#" className="dropdown-item">Settings</a><a href="#" className="dropdown-item">Activity log       </a>
-              <div className="dropdown-divider"></div><button  className="dropdown-item" onClick={()=>{cerrarSesion()}}><div className="dropdown-item">Cerrar Sesión</div></button>
+              <div className="dropdown-divider"></div><button  className="dropdown-item" onClick={ cerrarSesionBtn }><div className="dropdown-item">Cerrar Sesión</div></button>
+            </div>)
+            }
+            {usuarioLogin.idRol==="2" && (<div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboardP" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuarioLogin.firstname }</strong><small>{ usuarioLogin.lastname }</small></NavLink>
+              <div className="dropdown-divider"></div><a href="#" className="dropdown-item">Settings</a><a href="#" className="dropdown-item">Activity log       </a>
+              <div className="dropdown-divider"></div><button  className="dropdown-item" onClick={ cerrarSesionBtn }><div className="dropdown-item">Cerrar Sesión</div></button>
+            </div>)
+            }
+            {usuarioLogin.idRol==="3" &&
+            <div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboardA" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuarioLogin.firstname }</strong><small>{ usuarioLogin.lastname }</small></NavLink>
+              <div className="dropdown-divider"></div><a href="#" className="dropdown-item">Settings</a><a href="#" className="dropdown-item">Activity log       </a>
+              <div className="dropdown-divider"></div><button  className="dropdown-item" onClick={ cerrarSesionBtn }><div className="dropdown-item">Cerrar Sesión</div></button>
             </div>
+            }
           </li></React.Fragment>) : <React.Fragment> 
             <li className="nav-item  mr-3">
               <NavLink to="/login"      className="nav-link dropdown-toggle px-1 text-info"><i className="fa o-home-1 mr-1"></i><span className="">Iniciar Sesión</span></NavLink>

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import CourseDetails from "./course-details";
 import CourseContent from './course-content'
-import Preloader from './preloader'
+import Preloader from '../../cursos/curso/preloader';
 import { useSelector,  useDispatch } from "react-redux";
 import { obtenerCursoContenidoParaVenta } from "../../../actions/cursoReproductorActions";
 const Course = (props) => {
@@ -25,7 +25,7 @@ const Course = (props) => {
         <section className="course-details-section padding-120 pt-3">
             <div className="container">
                 <div className="row">
-                    <CourseDetails />
+                    <CourseDetails curso={curso} />
 
                     <div className="col-lg-8">
                         <div className="course-details-title">
@@ -55,7 +55,7 @@ const Course = (props) => {
                                     <h4>Descripción</h4>
                                     <p className="margin-top-20">{curso.descripcion}</p>
                                     <div className="overview-video margin-top-30 overflow-hidden">
-                                        <img src={curso.poster} alt="thumbnail"/>
+                                        <img src={curso.poster} alt="thumbnail" style={{"height":"100vh"}} className="img-fluid vh-100"/>
                                         <div className="video-play-button">
                                             <a href="https://www.youtube.com/watch?v=8AGgbIQyqR8" className="button-video">
                                                 <i className="fa fa-play"></i>

@@ -113,7 +113,7 @@ const Reproducir = (props) => {
                         {ReproductoresVideos}
                         <div className="course-video-tab padding-top-60">
 
-                        <ContenidoTabVideo />                            
+                        <ContenidoTabVideo curso={curso}/>                            
                             
                         </div>
                     </div>

@@ -808,3 +808,48 @@ h6 {
   background-color: #87d5ff;
   border-radius: 20px;
 }
+
+/* zuz toast */
+.zuz-toast{
+  /*background: #000;*/
+  bottom: 20px;
+  right: 20px;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 3px;
+  z-index: 9999;
+  transform: translateY(150px);
+  opacity: 0;
+}
+.zuz-toast-visible{
+  transform: translateY(0px);
+  opacity: 1;
+}
+.zuz-toast-hidden{
+  transform: translateY(-150px);
+  opacity: 0;
+}
+.zuz-toast button{
+  border: 0px;
+  line-height: 1;
+  padding: 4px 5px 4px 20px ;
+  color: #fff;
+   background: rgba(0,0,0,0); 
+  margin-left: 20px;
+  border-left: 1px solid #2d2d2d;
+}
+.zuz-toast button:hover{
+  opacity: 0.5;
+}
+
+.flex{ display: flex;}
+.fixed { position: fixed; }
+.fontn{ font-weight: normal;}
+.s14{ font-size: 14px;}
+.anim{transition: all 0.2s linear 0s;}
+.aic{ align-items: center;}
+.fontb{ font-weight: bold;}
+.s15{ font-size: 15px;}
+.success {
+  background-color: #28a745!important;
+}

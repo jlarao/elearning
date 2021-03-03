@@ -8,6 +8,7 @@ import {
     OBTENER_CUSOS_INSTRUCTOR,
     CURSOS_ERROR,
     CURSOS_AGREGAR,
+    CURSOS_EDITAR,
     CURSOS_POR_ID,
     CURSOS_FORM_TEMACURSO,
     CURSOS_GUARDAR_TEMA_CURSO,
@@ -25,7 +26,12 @@ import {
     CURSOS_EDITAR_SUBTEMA_CURSO,
     CURSOS_ELIMINAR_SUBTEMA_CURSO,
     CURSOS_EDITAR_TEMA_CURSO,
-    CURSOS_ELIMINAR_TEMA_CURSO
+    CURSOS_ELIMINAR_TEMA_CURSO,
+    LIMPIAR_STATE,
+    LIMPIAR_MENSAJE,
+    LOADING_CURSO,
+    OBTENER_CURSOS_ALUMNO,
+    OBTENER_CURSOS_ALUMNO_ERROR
 } from "../../types";
 
 
@@ -41,16 +47,17 @@ const CursosState = props => {
         requisitos:"",
         que_aprenderas:"",
         idCategoria: 0,
+        precio: 0,
         mensaje:"",
-        fechaRegistro:"",
-        mensaje:"",
+        fechaRegistro:"",        
         redirect:null,
         temasCurso:[],
         cursos:[],
         formTemaCurso: false,
         formSubTema: false,
         idTema:null,
-        subTemasCurso: []
+        subTemasCurso: [],
+        cargando: false
     }
     const [state, dispatch] = useReducer(CursosReducer, initialState);
 
@@ -81,6 +88,8 @@ const CursosState = props => {
                 })
             }          
         }
+
+        
 
         const agregarCurso = async(curso) => { 
             console.log(curso);
@@ -128,6 +137,10 @@ const CursosState = props => {
             try {
                 const response = await clienteAxios.put("cursos", curso);
                 console.log(response.data); 
+                const alert = {
+                    msg: response.data.message,
+                    categoria: "success"
+                }
                 const c = {
                     "id": curso.idCurso,
                     "nombreCurso": curso.nombre,
@@ -137,11 +150,13 @@ const CursosState = props => {
                     "idCategoria": curso.idCategoria ,
                     "descripcion": curso.descripcion,
                     "requisitos": curso.requisitos,
-                    "que_aprenderas": curso.que_aprenderas
+                    "que_aprenderas": curso.que_aprenderas,
+                    "precio": curso.precio,
+                    "mensaje": alert
                 }               
                 //props.history.push("/curso-detalles/"+response.data.idCurso)
                 dispatch({
-                    type: CURSOS_AGREGAR,
+                    type: CURSOS_EDITAR,
                     payload: c
                 })                                                          
             } catch (error) {                             
@@ -164,6 +179,9 @@ const CursosState = props => {
                 //enviar token por header
                 tokenAuth(token);
             } 
+            dispatch({
+                type: LOADING_CURSO
+            })
             try {
                 const response = await clienteAxios.get("cursos?id="+id);
                 console.log(response.data);                
@@ -630,6 +648,46 @@ const CursosState = props => {
                     })                                                          
             }            
         }
+        const limpiarState = () =>{
+            dispatch({
+                type: LIMPIAR_STATE
+            })
+        }
+
+        const limpiarMensaje = () =>{
+            console.log("limpiarMensaje");
+            dispatch({
+                type: LIMPIAR_MENSAJE
+            })
+        }
+
+        const obtenerCursosUsuarioAlumno = async() => { 
+            //console.log("obtener cursos");
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            }   
+            try {
+                //const api = await fetch('http://localhost:81/rest/api/cursos?page=0');
+                //const cursos = await api.json();
+                const api = await clienteAxios.get("cursos?al=0");
+                console.log(api); 
+                dispatch({
+                type: OBTENER_CURSOS_ALUMNO,
+                payload: api.data.data
+            })    
+            } catch (error) {
+                const alert = {
+                    msg: "Hubo un error",
+                    categoria: "danger"
+                }
+                dispatch({
+                    type: CURSOS_ERROR,
+                    payload: alert
+                })
+            }          
+        }
     return ( 
         <CursosContext.Provider
             value={{
@@ -648,6 +706,8 @@ const CursosState = props => {
                 que_aprenderas:state.que_aprenderas,
                 poster:state.poster,
                 idCategoria: state.idCategoria,
+                precio: state.precio,
+                cargando: state.cargando,
                 obtenerCursosUsuarioInstructor,
                 agregarCurso,
                 obtenerCursosPorId,
@@ -668,7 +728,10 @@ const CursosState = props => {
                 eliminarSubTemaCurso,
                 editarTemaCurso,
                 eliminarTemaCurso,
-                editarCurso
+                editarCurso,
+                limpiarState,
+                limpiarMensaje,
+                obtenerCursosUsuarioAlumno
                 }}
         >
             {props.children}

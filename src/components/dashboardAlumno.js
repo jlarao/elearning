@@ -5,21 +5,47 @@ import { obtenerCursosUsuarioAlumno } from "../actions/cursoReproductorActions";
 import AuthContext  from "../context/authentication/authContext";
 import CursosContext from "../context/cursos/cursosContext";
 import { Link } from "react-router-dom";
+import Modal from "./functions/function";
+import Preloader from "./cursos/curso/preloader";
 function DashboardAlumno() {
 
   //info authentication
   const authContext  = useContext(AuthContext);
-  const { usuarioAutenticado} = authContext;
+  const { autenticado, usuarioAutenticado} = authContext;
   
   const cursosContext = useContext(CursosContext);
-  const { cursos, obtenerCursosUsuarioInstructor } = cursosContext;
+  const { mensaje, cursos, obtenerCursosUsuarioAlumno , limpiarMensaje} = cursosContext;
+
+  /*if(!autenticado){
+    return (
+        <Preloader />
+    );
+    }*/
 
   useEffect(() => {
-    usuarioAutenticado();
+    console.log(autenticado);
+    if(!autenticado){
+      usuarioAutenticado();      
+    }
+      
+    
+    
     console.log("dashboard");
-    obtenerCursosUsuarioInstructor();
-  }, []);
+    
+    if(mensaje){
+      //mostrarAlerta(mensaje.msg, mensaje.categoria);
+      console.log(mensaje);
+      tratarMensajes(mensaje)
+      
+    }else{
+      obtenerCursosUsuarioAlumno();
+    }
+  }, [mensaje]);
 
+  const tratarMensajes=()=>{
+    Modal.Toast.show({html: mensaje.msg, mensaje: mensaje});
+    //setTimeout( ()=>{ limpiarMensaje() } ,5000 );
+  }
   var cursosLista = [];
   for(let i=0; i< cursos.length;i++){
     console.log(i);
@@ -32,7 +58,7 @@ function DashboardAlumno() {
           </div>
         </div>
         <div className="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-violet">                        
-          <Link to={"/curso-editar/"+cursos[i].idCurso}><button type="button" className="ml-2 btn btn-info">Editar Curso</button></Link>
+          <Link to={"/curso-tomar/"+cursos[i].idCurso}><button type="button" className="ml-2 btn btn-info">Ver Curso</button></Link>
         </div>
       </div>
     )
@@ -74,7 +100,7 @@ function DashboardAlumno() {
                   <div className="flex-grow-1 d-flex align-items-center">
                     <div className="dot mr-3 bg-violet"></div>
                     <div className="text">
-                      <Link to="/curso-alta"><button type="button" className="ml-2 btn btn-info">Crear Nuevo Curso</button></Link>
+                      
                     </div>
                   </div>
                   <div className="icon bg-violet text-white"><i className="fas fa-clipboard-check"></i></div>

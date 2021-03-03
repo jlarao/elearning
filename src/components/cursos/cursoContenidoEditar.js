@@ -3,14 +3,13 @@ import axios, {CancelToken, isCancel} from "axios";
 import AlertaContext from "../../context/alerta/alertaContext";
 import CursosContext from "../../context/cursos/cursosContext";
 import PreLoader from "../../components/cursos/curso/course";
-const CursoContenidoEditar = ({nombreC, id, idC, pos, desc, req, que_}) => {
+const CursoContenidoEditar = ({nombreC, id, idC, pos, desc, req, que_, precioCurso}) => {
   const alertaContext = useContext(AlertaContext);
   const { alerta } = alertaContext;
   const cursosContext = useContext(CursosContext);
   const { editarCurso  } = cursosContext;
   console.log(id);
-  if(id===null)
-    <PreLoader />
+  
   const [datos, setDatos] = useState({
     curso:  {
       idCurso: id,
@@ -20,7 +19,8 @@ const CursoContenidoEditar = ({nombreC, id, idC, pos, desc, req, que_}) => {
       poster: pos,
       descripcion: desc,
       requisitos: req,
-      que_aprenderas: que_
+      que_aprenderas: que_,
+      precio: precioCurso
       },
     error: false,
     errorMsg: ""       
@@ -31,7 +31,11 @@ const { nombreCurso, idCategoria,
   poster,
   descripcion,
   requisitos,
-  que_aprenderas } = curso;
+  que_aprenderas,
+  precio } = curso;
+  console.log(nombreCurso);
+  if(!!(nombreCurso))
+    <PreLoader />
 const [urlImagen, setUrlImagen] = useState(null);
 const [categorias, setCategorias] = useState([]);
 const [porcentajeSubidoImagen, setporcentajeSubidoImagen] = useState(0);
@@ -230,7 +234,12 @@ const consultarAPI =async  () => {
                           </div>
                         </div>
 
-
+                        <div className="form-group row">
+                          <label className="col-md-3 form-control-label">Precio</label>
+                          <div className="col-md-9">
+                            <input type="number" className="form-control" name="precio" onChange={manejadorChange} value={precio} />
+                          </div>
+                        </div>
   
                         <div className="form-group row">
                           <label className="col-md-3 form-control-label">Categoria</label>
@@ -243,11 +252,12 @@ const consultarAPI =async  () => {
                             </select>
                           </div>                      
                         </div>
+                        
   
                         <div className="form-group row">
                           <label className="col-md-3 form-control-label"></label>
                           <div className="col-md-9">
-                            <img src={poster} className="img-fluid" name="imagen" />
+                            <img src={poster} className="img-fluid " style={{"height":"100vh"}} name="imagen" />
                           </div>
                         </div>
 
@@ -265,7 +275,7 @@ const consultarAPI =async  () => {
 
                         <div className="form-group row">
                           <div className="col-md-9 ml-auto">
-                            <input type="submit" value="Guardar" className="btn btn-primary" />                          
+                            <input type="submit" value="Guardar" className="btn btn-primary" data-toggle="collapse" href="#collapseOneE"/>                          
                           </div>
                         </div>                   
                                            

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ContenidoTabVideo = () => {
+const ContenidoTabVideo = ({curso}) => {
     return ( 
 
         <React.Fragment>
@@ -26,24 +26,13 @@ const ContenidoTabVideo = () => {
                                     <div className="video-tab-title">
                                         <h5>about this course</h5>
                                     </div>
-                                    <p className="margin-top-20">Advanced story telling techniques for writers: Personas, Characters & Plots  Proven Tips and Tricks of the Digital Marketing Trade growth Hacking. Unique Ways of Promoting a Business from Scratch</p>
+                                    <p className="margin-top-20">{curso.descripcion}</p>
                                     <div className="video-tab-title margin-top-30">
                                         <h5>what you'll learn?</h5>
                                     </div>
                                     <div className="content-list-items margin-top-20">
                                         <div className="row">
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> Delectus harum deserunt ut optio corporis cum facilis aliquid tempore</span>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> Veniam maiores adipisci placeat ipsa dolorem culpa ipsam tenetur</span>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> Minima fugit nobis earum exercitationem a deleniti veniam maiores</span>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> Atque minima fugit nobis earum exercitationem ipsa obcaecati</span>
-                                            </div>
+                                        <p>{curso.que_aprenderas}</p>
                                         </div>
                                     </div>
                                     <div className="video-tab-title margin-top-30">
@@ -72,27 +61,9 @@ const ContenidoTabVideo = () => {
                                         <h5>certificate</h5>
                                     </div>
                                     <p className="margin-top-20">Get Course certificate by completing entire course</p>
-                                    <div className="video-tab-title margin-top-30">
-                                        <h5>description</h5>
-                                    </div>
-                                    <p className="margin-top-20">This course is aimed at teaching photographers what it takes to improve your techniques to earn more money.You'll start with the basics and tackle how a camera operates, the types of cameras and lenses available, and equipment you'll need for accomplishing your goals. </p>
-                                    <span className="uppercase-font">UPDATED WITH A 273-PAGE NOTEBOOK & NEW LESSONS</span>
-                                    <p className="margin-top-20">This online photography course will teach you how to take amazing images and even sell them, whether you use a smartphone, mirrorless or DSLR camera. </p>
-                                    <ul className="caret-list">
-                                        <li><i className="fa fa-caret-right"></i> What do all these packages, tools, libraries and frameworks do?</li>
-                                        <li><i className="fa fa-caret-right"></i> What IS a library and what's the difference to a framework?</li>
-                                        <li><i className="fa fa-caret-right"></i> Which framework should you learn? Angular, React.js or Vue.js?</li>
-                                        <li><i className="fa fa-caret-right"></i> What about jQuery?</li>
-                                    </ul>
-                                    <div className="video-tab-title margin-top-30">
-                                        <h5>what you will learn</h5>
-                                    </div>
-                                    <ul className="caret-list">
-                                        <li><i className="fa fa-caret-right"></i> Understand how cameras work and what gear you need</li>
-                                        <li><i className="fa fa-caret-right"></i> Master shooting in manual mode and understanding your camera</li>
-                                        <li><i className="fa fa-caret-right"></i> Know what equipment you should buy no matter what your budget</li>
-                                        <li><i className="fa fa-caret-right"></i> Follow our practical demonstrations to see how we shoot in real-world scenarios</li>
-                                    </ul>
+                                    
+                                   
+                                   
                                 </div>
 
                                 <div className="tab-pane container fade tab-two-content tab-content-bg q-a-content lost" id="menu1"role="tabpanel" aria-labelledby="menu1-tab">

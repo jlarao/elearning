@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import CursoReproductor from "./cursoReproductorReducer";
-
+import Instructor from "./instructorReducer";
 export default combineReducers({
-    cursoReproductor: CursoReproductor
+    cursoReproductor: CursoReproductor,
+    instructor: Instructor
 })

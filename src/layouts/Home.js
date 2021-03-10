@@ -11,7 +11,7 @@ function Home() {
   }, []);  
 
   const consultarAPI = async () => {
-    const api = await fetch('http://localhost:81/rest/api/cursos?page=0');
+    const api = await fetch(process.env.REACT_APP_BACKEND_URL +'cursos?page=0');
     const frase = await api.json()
     console.log(frase);
     setPopularCourses(frase);

@@ -1,4 +1,4 @@
-import {Route, NavLink, HashRouter} from 'react-router-dom';
+import {Route,  HashRouter} from 'react-router-dom';
 //import {Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 import Navbar from "./layouts/navbar";
 import AdminLayout from "./layouts/Admin";
@@ -15,6 +15,7 @@ import RutaPrivada from "./components/rutas/RutaPrivada";
 import CursoEditar from "./components/cursoEditar";
 import Reproducir from "./components/reproductor/reproducir";
 import Course from "./components/cursos/curso/course";
+import EditarDatosPersonalesInstructor from "./components/instructor/editarDatosPersonales";
 
 import AuthState from "./context/authentication/authState";
 import AlertasState from "./context/alerta/alertaState";
@@ -51,11 +52,12 @@ function App() {
         <Route path="/course/:courseid" component={Course} />
                  
         <RutaPrivada exact path="/dashboardAdmin" component={DashboardAdmin}/>
-          <RutaPrivada exact path="/dashboardP" component={Dashboard}/>        
-          <RutaPrivada exact path="/dashboardA" component={DashboardAlumno}/>        
-          <RutaPrivada exact path="/curso-alta" component={CursoAlta}/>
-          <RutaPrivada exact path="/curso-editar/:courseid" component={CursoEditar}/>
-          <RutaPrivada exact path="/curso-tomar/:courseid" component={Reproducir}/>
+        <RutaPrivada exact path="/dashboardP" component={Dashboard}/>        
+        <RutaPrivada exact path="/dashboardA" component={DashboardAlumno}/>        
+        <RutaPrivada exact path="/curso-alta" component={CursoAlta}/>
+        <RutaPrivada exact path="/curso-editar/:courseid" component={CursoEditar}/>
+        <RutaPrivada exact path="/curso-tomar/:courseid" component={Reproducir}/>
+        <RutaPrivada exact path="/instructor-edit/:id" component={EditarDatosPersonalesInstructor}/>
         
     </div>
     </Provider>

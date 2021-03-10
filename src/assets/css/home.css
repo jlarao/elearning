@@ -853,3 +853,13 @@ h6 {
 .success {
   background-color: #28a745!important;
 }
+li.sidebar-list-item  {
+  text-decoration: none;
+    background: #f5f5f5;
+}
+
+button.sidebar-link, button.sidebar-link:hover {
+  text-decoration: none;    
+  color: #6c757d;
+  border:none;
+}

@@ -17,7 +17,8 @@ const AgregarDoc = ({ocultarFormAgregarDoc, idTema}) => {
             nombreHerramienta: "",
             nombreTipo: "pdf",
             estatus: "Activo",
-            urlHerramienta:  ""
+            urlHerramienta:  "",
+            duracion: ""
         }       
     });
     const cancelSubirPdf = useRef(null);

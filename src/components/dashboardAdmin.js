@@ -7,7 +7,7 @@ function DashboardAdmin() {
 
   //info authentication
   const authContext  = useContext(AuthContext);
-  const { usuarioAutenticado} = authContext;
+  const { usuarioAutenticado, usuarioLogin} = authContext;
   
   const cursosContext = useContext(CursosContext);
   const { cursos, obtenerCursosUsuarioInstructor } = cursosContext;
@@ -62,7 +62,7 @@ function DashboardAdmin() {
                     <h2 className="h6 mb-0 text-uppercase">Cursos como instructor</h2>
                   </div>
                   <div className="card-body">
-                    <p className="text-gray mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p className="text-gray mb-5">Listado de Cursos</p>
                               {cursosLista}                                
                   </div>
                 </div>
@@ -81,7 +81,7 @@ function DashboardAdmin() {
                   <div className="flex-grow-1 d-flex align-items-center">
                     <div className="dot mr-3 bg-green"></div>
                     <div className="text">
-                      <h6 className="mb-0">New Quotes</h6><span className="text-gray">214 new quotes</span>
+                    <Link to={"/admin-edit/"+usuarioLogin.id}><button type="button" className="ml-2 btn btn-info">Datos Personales</button></Link>
                     </div>
                   </div>
                   <div className="icon bg-green text-white"><i className="fas fa-dollar-sign"></i></div>

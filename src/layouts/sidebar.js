@@ -1,31 +1,33 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory  } from "react-router-dom";
 import "../assets/css/style.default.css";
 import PreLoader from "../components/cursos/curso/preloader";
 import AuthContext  from "../context/authentication/authContext";
 import CursosContext  from "../context/cursos/cursosContext";
 import Preloader from '../components/cursos/curso/preloader';
 
-function Sidebar() {
+function Sidebar(props) {
   const authContext  = useContext(AuthContext);
   const { usuarioLogin, cerrarSesion } = authContext;
 
   const cursosContext = useContext(CursosContext);
   const { limpiarState } = cursosContext;
-   
-  if(usuarioLogin.idRol) return <PreLoader />;
-  console.log(usuarioLogin);
+  const history = useHistory();
+  //if(!!(usuarioLogin.idRol)) return <PreLoader />;
+  //console.log(usuarioLogin);
 
   const cerrarSesionBtn = () =>{
     cerrarSesion();
     limpiarState();
+    //props.history.push("/")
+    history.push("/");
   }
 
     return(<div id="sidebar" className="sidebar py-3">
     <div className="text-gray-400 text-uppercase px-3 px-lg-4 py-4 font-weight-bold small headings-font-family">MAIN</div>
     <ul className="sidebar-menu list-unstyled">
-          <li className="sidebar-list-item"><NavLink to="/" className="sidebar-link text-muted active"><i className="o-home-1 mr-3 text-gray"></i><span>Inicio</span></NavLink></li>
-          
+          <li className="sidebar-list-item"><NavLink to="/" className="sidebar-link text-muted"><i className="o-home-1 mr-3 text-gray"></i><span>Inicio</span></NavLink></li>
+          {usuarioLogin ? <React.Fragment>
           {usuarioLogin.idRol==="1" && (
             <li className="sidebar-list-item"><NavLink to="/dashboardAdmin" className="sidebar-link text-muted"><i className="o-sales-up-1 mr-3 text-gray"></i><span>Dashboard</span></NavLink></li>)
             }
@@ -34,11 +36,18 @@ function Sidebar() {
             }
             {usuarioLogin.idRol==="3" && (
             <li className="sidebar-list-item"><NavLink to="/dashboardA" className="sidebar-link text-muted"><i className="o-sales-up-1 mr-3 text-gray"></i><span>Dashboard</span></NavLink></li>)
-            }
-          <li className="sidebar-list-item"><a href="tables.html" className="sidebar-link text-muted"><i className="o-table-content-1 mr-3 text-gray"></i><span>Dashboard</span></a></li>
-          <li className="sidebar-list-item"><a href="forms.html" className="sidebar-link text-muted"><i className="o-survey-1 mr-3 text-gray"></i><span>Forms</span></a></li>
-      
-          <li className="sidebar-list-item"><a href="login.html" className="sidebar-link text-muted"><i className="o-exit-1 mr-3 text-gray"></i><span>Login</span></a></li>
+            } </React.Fragment> 
+            : null
+          }
+          
+          
+        {usuarioLogin ? 
+          <li className="sidebar-list-item"><button  className="sidebar-link text-muted btn-link"  onClick={ cerrarSesionBtn }><i className="o-exit-1 mr-3 text-gray"></i><span>Cerrar Sesión</span></button></li>
+          :<React.Fragment>
+          <li className="sidebar-list-item"><NavLink to="/registrar" className="sidebar-link text-muted"><i className="o-survey-1 mr-3 text-gray"></i><span>Registrar</span></NavLink></li>
+          <li className="sidebar-list-item"><NavLink to="/login" className="sidebar-link text-muted"><i className="o-exit-1 mr-3 text-gray"></i><span>Login</span></NavLink></li>
+          </React.Fragment>
+        }
     </ul>
     
   </div>)

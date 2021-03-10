@@ -1,6 +1,4 @@
 import React, { useContext , useState, useEffect} from "react";
-import axios from "axios";
-import { NavLink } from "react-router-dom";
 import AuthContext from '../context/authentication/authContext';
 import AlertaContext from '../context/alerta/alertaContext';
 

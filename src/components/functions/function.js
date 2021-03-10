@@ -26,7 +26,7 @@ const zuzToast = function(){
         ID = "zuz-toast" + generateID(5,4),
         toast = document.createElement('div'),
         btn = document.createElement('button');
-        console.log(options.mensaje.categoria);
+        console.log(options.mensaje);
         toast.id = ID;
         toast.classList = " zuz-toast fixed flex fontn anim s14 aic ";
         let alert = "bg-"+options.mensaje.categoria;

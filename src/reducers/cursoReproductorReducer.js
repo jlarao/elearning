@@ -27,7 +27,8 @@ export default function(state = initialState, action ){
         case CURSO_REPRODUCTOR_OBTENER_CONTENIDO:
             return{
                 ...state,
-                loading: action.payload
+                loading: action.payload,
+                curso: null
             }
         case CURSO_VENTA_OBTENER_CONTENIDO_EXITO:
         case CURSO_REPRODUCTOR_OBTENER_CONTENIDO_EXITO:

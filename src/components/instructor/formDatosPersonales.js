@@ -14,7 +14,8 @@ const FormDatosPersonales = ({instructor}) => {
         correoElectronico: instructor.correoElectronico,
         avatar: instructor.avatar,
         password: "",
-        confirmar: ""        
+        confirmar: ""
+        
   })
   const [porcentajeSubidoImagen, setporcentajeSubidoImagen] = useState(0);
     const cancelSubirPoster = useRef(null);  
@@ -147,7 +148,7 @@ const {errorb, errorMsg} = error;
       },
       cancelToken: new CancelToken( cancel => cancelSubirPoster.current = cancel )
     };
-    axios.post('http://localhost:81/rest/api/imagen',formData, options).then(res =>{
+    axios.post(process.env.REACT_APP_BACKEND_URL+'imagen',formData, options).then(res =>{
       //console.log(res);
       setporcentajeSubidoImagen(100)
       setTimeout(setporcentajeSubidoImagen(0) ,2000)
@@ -179,9 +180,8 @@ const {errorb, errorMsg} = error;
       cancelSubirPoster.current(" Usuario ha cancelado la subida de la imagens");
   } 
 
-    return ( <div className="page-holder w-100 d-flex flex-wrap">
-    <div className="container-fluid px-xl-5">
-      <section className="py-5">
+    return ( 
+      <section className="pt-2">
         <div className="row">
             <p></p>
               </div>
@@ -193,10 +193,10 @@ const {errorb, errorMsg} = error;
           <div className="col-lg-12 mb-5">
             <div className="card">
               <div className="card-header">
-                <h3 className="h6 text-uppercase mb-0">Formulario de Registro</h3>
+                <h3 className="h6 text-uppercase mb-0">Editar datos personales</h3>
               </div>
               <div className="card-body">
-                <p>Favor de capturar la inforación que se solicita.</p>
+                <p>Favor de capturar la inforación solicitada</p>
               <div className="card2">
               <div className="card-body">
                 <form className="form-horizontal" onSubmit={manejadorSubmit}>
@@ -262,7 +262,7 @@ const {errorb, errorMsg} = error;
                 
 
                   <div className="form-group row">
-                          <label className="col-md-3 form-control-label"></label>
+                          <label className="col-md-3 form-control-label">Avatar</label>
                           <div className="col-md-9">
                             <img src={avatar} className="img-fluid " style={{"height":"25vh"}} name="imagen" />
                           </div>
@@ -302,8 +302,7 @@ const {errorb, errorMsg} = error;
           </div>
         
       </section>
-      </div>
-      </div> );
+       );
 }
  
 export default FormDatosPersonales;

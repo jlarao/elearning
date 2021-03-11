@@ -114,11 +114,11 @@ const Course = (props) => {
                                                 <div className="single-instructor">
                                                     <span className="instructor-sign">{curso.nombre}</span>
                                                     <div className="instructor-image overflow-hidden">
-                                                        <a href="#"><img src={curso.avatar} alt="image"/></a>
+                                                        <img src={curso.avatar} alt="image" className="img-fluid " style={{"height":"30vh"}}/>
                                                     </div>
                                                     <div className="instructor-content">
-                                                        <h4><a href="#">{curso.nombre} {curso.apellidoPaterno} {curso.apellidoMaterno}</a></h4>
-                                                        <span>UI UX teacher</span>
+                                                        <h4>{curso.nombre} {curso.apellidoPaterno} {curso.apellidoMaterno}</h4>
+                                                        <span>{curso.nombreProfesion}</span>
                                                     </div>
                                                     <div className="hover-state">
                                                         <ul>
@@ -133,11 +133,11 @@ const Course = (props) => {
                                         </div>
                                         <div className="col-lg-7">
                                             <div className="instructor-about">
-                                                <h4>about {curso.nombre} {curso.apellidoPaterno} {curso.apellidoMaterno}</h4>
-                                                <p className="margin-top-20">Blanche has always been a passionate educator and instructor for students who have a talent for languages and technical science. </p>
-                                                <p className="margin-top-20">She founded MaxCoach in 1988 and trained over 5000 students online, many of whom are now successful businessmen, educators & technicians.</p>
+                                                <h4>Instructor {curso.nombre} {curso.apellidoPaterno} {curso.apellidoMaterno}</h4>
+                                                <p className="margin-top-20">{curso.expositor}</p>
+                                                
                                                 <div className="instructor-button margin-top-30">
-                                                    <a href="instructor-details.html" className="template-button">know more</a>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -151,7 +151,7 @@ const Course = (props) => {
                                                 <div className="single-skill-item">
                                                     <div className="progress-info d-flex justify-content-between">
                                                         <div className="progress-info-left">
-                                                            <span>UI & UX design</span>
+                                                            <span>{curso.nombreProfesion}</span>
                                                         </div>
                                                         <div className="progress-info-right">
                                                             <span>80%</span>

@@ -123,7 +123,7 @@ const uploadPoster = ({target: { files }}) =>{
     },
     cancelToken: new CancelToken( cancel => cancelSubirPoster.current = cancel )
   };
-  axios.post('http://localhost:81/rest/api/imagen',formData, options).then(res =>{
+  axios.post(process.env.REACT_APP_BACKEND_URL+'imagen',formData, options).then(res =>{
     //console.log(res);
     setporcentajeSubidoImagen(100)
     setTimeout(setporcentajeSubidoImagen(0) ,2000)
@@ -171,7 +171,7 @@ useEffect( () => {
 }, []); 
 
 const consultarAPI =async  () => {    
-  const api = await fetch('http://localhost:81/rest/api/categorias?page=0');
+  const api = await fetch(process.env.REACT_APP_BACKEND_URL+'categorias?page=0');
   const frase = await api.json()
   setCategorias(frase);            
 } 

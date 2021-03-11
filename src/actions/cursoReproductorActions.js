@@ -90,7 +90,7 @@ const obtenerCursosUsuarioAlumnoActionError=(alert)=>({
 //curso para clientes no logeados
 export function obtenerCursoContenidoParaVenta(id){
     return async (dispatch) => {
-        dispatch(obtenerCursoContenidoParaVentaAction);
+        dispatch(obtenerCursoContenidoParaVentaAction());
 
         const response = await axios.get(process.env.REACT_APP_BACKEND_URL+"cursos?idVen="+id);
         try {

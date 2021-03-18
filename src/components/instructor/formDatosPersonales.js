@@ -1,6 +1,6 @@
 import React, { useState, useRef} from 'react';
 import axios, {CancelToken, isCancel} from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editarDatosInstructor } from "../../actions/instructorActions";
 const FormDatosPersonales = ({instructor}) => {
     const dispatch = useDispatch();
@@ -185,9 +185,7 @@ const {errorb, errorMsg} = error;
         <div className="row">
             <p></p>
               </div>
-        <div className="row">
-            <h3></h3>
-        </div>
+        
          
         <div className="row">
           <div className="col-lg-12 mb-5">
@@ -264,7 +262,7 @@ const {errorb, errorMsg} = error;
                   <div className="form-group row">
                           <label className="col-md-3 form-control-label">Avatar</label>
                           <div className="col-md-9">
-                            <img src={avatar} className="img-fluid " style={{"height":"25vh"}} name="imagen" />
+                            <img src={avatar} className="img-fluid " style={{"height":"25vh"}} name="imagen" alt="avatar"/>
                           </div>
                         </div>
 

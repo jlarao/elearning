@@ -1,12 +1,11 @@
 import React, { useEffect, useContext }  from 'react';
-import {useDispatch, useSelector} from "redux";
-import { obtenerCursosUsuarioAlumno } from "../actions/cursoReproductorActions";
+
 
 import AuthContext  from "../context/authentication/authContext";
 import CursosContext from "../context/cursos/cursosContext";
 import { Link } from "react-router-dom";
 import Modal from "./functions/function";
-import Preloader from "./cursos/curso/preloader";
+
 function DashboardAlumno() {
 
   //info authentication
@@ -14,7 +13,7 @@ function DashboardAlumno() {
   const { autenticado, usuarioAutenticado} = authContext;
   
   const cursosContext = useContext(CursosContext);
-  const { mensaje, cursos, obtenerCursosUsuarioAlumno , limpiarMensaje} = cursosContext;
+  const { mensaje, cursos, obtenerCursosUsuarioAlumno } = cursosContext;
 
   /*if(!autenticado){
     return (
@@ -64,17 +63,7 @@ function DashboardAlumno() {
     )
   }
    
-    const manejadorSubmit = e =>{
-
-    }
-
-    const manejadorChange = e =>{
-
-    }
-
-    const manejadorBoton = e =>{
-
-    }
+   
 
    
 

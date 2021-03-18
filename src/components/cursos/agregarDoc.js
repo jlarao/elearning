@@ -2,7 +2,7 @@ import React, {useRef, useState, useContext} from 'react';
 import axios, {CancelToken, isCancel} from "axios";
 import CursosContext from "../../context/cursos/cursosContext";
 
-const AgregarDoc = ({ocultarFormAgregarDoc, idTema}) => {
+const AgregarDoc = ({ocultarFormAgregarDoc, idTema, maxFileUpload}) => {
   const cursosContext =  useContext(CursosContext);
   const { agregarHerramientaDocCurso } = cursosContext;
   
@@ -52,7 +52,7 @@ const AgregarDoc = ({ocultarFormAgregarDoc, idTema}) => {
           },
           cancelToken: new CancelToken( cancel => cancelSubirPdf.current = cancel )
         };
-        axios.post('http://localhost:81/rest/api/pdf',formData, options).then(res =>{
+        axios.post(process.env.REACT_APP_BACKEND_URL+'pdf',formData, options).then(res =>{
           console.log(res);
           setporcentajeSubidoPdf(100)
           setTimeout(setporcentajeSubidoPdf(0) ,2000)
@@ -156,7 +156,9 @@ const AgregarDoc = ({ocultarFormAgregarDoc, idTema}) => {
                           <div className="col-md-3 ml-auto">
                             <button type="button" className="btn btn-primary" onClick={cancelUploadPdf}>Cancelar</button>                         
                           </div>
-                        </div></React.Fragment>}</div>                                 
+                        </div></React.Fragment>}</div>   
+                        <label className="col-md-3 form-control-label"></label>
+                        <div className="col-md-9"><span> Maximo tamaño de archivo permitido {maxFileUpload} MB</span></div>                              
         </div>
 
         

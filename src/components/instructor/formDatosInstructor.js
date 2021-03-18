@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { altaDatosInstructorProfesion } from "../../actions/instructorActions";
 const FormDatosInstructor = ({ expositor , idUsuario }) => {
     const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const FormDatosInstructor = ({ expositor , idUsuario }) => {
         idUsuarioExpositor: idUsuario
   })
   
-  const {idExpositor, idProfesion, descripcion } = usuario;
+  const { idProfesion, descripcion } = usuario;
   console.log(expositor);  
   
   const [error, guardarError]  = useState({        
@@ -25,37 +25,10 @@ const {errorb, errorMsg} = error;
 const [categorias, setCategorias] = useState([]);
 useEffect( () => {    
     consultarAPI();
-    //checarExpositor();    
+       
   }, []); 
   
-  const checarExpositor = () => {    
-  if(typeof expositor !=='undefined'){      
-      if(typeof expositor.idExpositor !=='undefined'){
-        console.log(expositor.idExpositor);
-        guardarUsuario({
-            ...usuario,
-            'idExpositor2': 1        
-            })
-    console.log(usuario);
-      }
-      if(typeof expositor.idProfesion !=='undefined'){
-        console.log(expositor.idProfesion);
-        guardarUsuario({           
-            ...usuario,
-            'idProfesion': expositor.idProfesion        
-        })    
-    }
-    if(typeof expositor.descripcion !=='undefined'){
-        console.log(expositor.descripcion);
-        guardarUsuario({           
-            ...usuario,
-            'descripcion': expositor.descripcion        
-        })
-    }
-  }else{
-
-  }
-  }
+  
   const consultarAPI =async  () => {    
     const api = await fetch(process.env.REACT_APP_BACKEND_URL+'profesion?page=0');
     const frase = await api.json()
@@ -123,14 +96,14 @@ useEffect( () => {
               <div className="card-body">
                 <form className="form-horizontal" onSubmit={manejadorSubmit}>
                 <div className="form-group row">
-                    <label className="col-md-3 form-control-label">descripción de habilidades como instructor</label>
+                    <label className="col-md-3 form-control-label">Descripción de habilidades como instructor</label>
                     <div className="col-md-9">                      
                       <textarea className="form-control" name="descripcion" onChange={manejadorChange} value= {descripcion} rows="3" ></textarea>
                     </div>
                   </div>
                  
                   <div className="form-group row">
-                          <label className="col-md-3 form-control-label">Categoria</label>
+                          <label className="col-md-3 form-control-label">Grado</label>
                           <div className="col-md-9 select mb-3">
                             <select name="idProfesion" className="form-control" onChange={manejadorChange} value={idProfesion} >
                               <option value="" > Seleccione una opción</option>

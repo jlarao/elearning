@@ -24,29 +24,24 @@ function DashboardAdmin() {
     cursosLista.push(
       <div className="d-flex justify-content-between align-items-start align-items-sm-center mb-4 flex-column flex-sm-row " key={i}>
         <div className="left d-flex align-items-center">
-          <div className="icon icon-lg shadow mr-3 text-gray"><i className="fab fa-dropbox"></i></div>
+          {cursos[i].estatus ==='Activo'? 
+          (<div className="icon icon-lg shadow mr-3 text-blue" title={cursos[i].estatus}><i className="far fa-check-circle"></i></div>)
+          :
+          <div className="icon icon-lg shadow mr-3 text-red" title={cursos[i].estatus}><i className="fas fa-ban"></i></div>
+          }
+          
           <div className="text">
             <h6 className="mb-0 d-flex align-items-center"> <span>{cursos[i].nombreCurso}</span><span className=" ml-2 "></span></h6><small className="text-gray">{cursos[i].fechaRegistro}</small>
           </div>
         </div>
         <div className="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-violet">                        
-          <Link to={"/curso-editar/"+cursos[i].idCurso}><button type="button" className="ml-2 btn btn-info">Editar Curso</button></Link>
+          <Link to={"/curso-editar/"+cursos[i].idCurso}><button type="button" className="ml-2 btn btn-info">Editar</button></Link>
         </div>
       </div>
     )
   }
    
-    const manejadorSubmit = e =>{
-
-    }
-
-    const manejadorChange = e =>{
-
-    }
-
-    const manejadorBoton = e =>{
-
-    }
+   
 
    
 
@@ -72,28 +67,20 @@ function DashboardAdmin() {
                   <div className="flex-grow-1 d-flex align-items-center">
                     <div className="dot mr-3 bg-violet"></div>
                     <div className="text">
-                      <Link to="/curso-alta"><button type="button" className="ml-2 btn btn-info">Crear Nuevo Curso</button></Link>
+                      <Link to="/curso-alta"><button type="button" className="ml-2 btn btn-info">Nuevo Curso</button></Link>
                     </div>
                   </div>
-                  <div className="icon bg-violet text-white"><i className="fas fa-clipboard-check"></i></div>
+                  <div className="icon bg-blue text-white"><i className="fas fa-plus"></i></div>
                 </div>
-                <div className="bg-white shadow roundy px-4 py-3 d-flex align-items-center justify-content-between mb-4">
-                  <div className="flex-grow-1 d-flex align-items-center">
-                    <div className="dot mr-3 bg-green"></div>
-                    <div className="text">
-                    <Link to={"/admin-edit/"+usuarioLogin.id}><button type="button" className="ml-2 btn btn-info">Datos Personales</button></Link>
-                    </div>
-                  </div>
-                  <div className="icon bg-green text-white"><i className="fas fa-dollar-sign"></i></div>
-                </div>
+               
                 <div className="bg-white shadow roundy px-4 py-3 d-flex align-items-center justify-content-between mb-4">
                   <div className="flex-grow-1 d-flex align-items-center">
                     <div className="dot mr-3 bg-blue"></div>
                     <div className="text">
-                      <h6 className="mb-0">New clients</h6><span className="text-gray">25 new clients</span>
+                    <Link to={"/adicional"}><button type="button" className="ml-2 btn btn-info">Adicional</button></Link>
                     </div>
                   </div>
-                  <div className="icon bg-blue text-white"><i className="fas fa-user-friends"></i></div>
+                  <div className="icon bg-blue text-white"><i className="fas fa-pencil-alt"></i></div>
                 </div>
                 
               </div>

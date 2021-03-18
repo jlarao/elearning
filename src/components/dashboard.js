@@ -36,17 +36,7 @@ function Dashboard() {
     )
   }
    
-    const manejadorSubmit = e =>{
-
-    }
-
-    const manejadorChange = e =>{
-
-    }
-
-    const manejadorBoton = e =>{
-
-    }
+   
 
    
 
@@ -72,10 +62,10 @@ function Dashboard() {
                   <div className="flex-grow-1 d-flex align-items-center">
                     <div className="dot mr-3 bg-violet"></div>
                     <div className="text">
-                      <Link to="/curso-alta"><button type="button" className="ml-2 btn btn-info">Crear Nuevo Curso</button></Link>
+                      <Link to="/curso-alta"><button type="button" className="ml-2 btn btn-info">Nuevo Curso</button></Link>
                     </div>
                   </div>
-                  <div className="icon bg-violet text-white"><i className="fas fa-clipboard-check"></i></div>
+                  <div className="icon bg-blue text-white"><i className="fas fa-plus"></i></div>
                 </div>
                 <div className="bg-white shadow roundy px-4 py-3 d-flex align-items-center justify-content-between mb-4">
                   <div className="flex-grow-1 d-flex align-items-center">
@@ -84,17 +74,9 @@ function Dashboard() {
                       <Link to={"/instructor-edit/"+usuarioLogin.id}><button type="button" className="ml-2 btn btn-info">Datos Instructor</button></Link>
                     </div>
                   </div>
-                  <div className="icon bg-green text-white"><i className="fas fa-dollar-sign"></i></div>
+                  <div className="icon bg-green text-white"><i className="fas fa-user"></i></div>
                 </div>
-                <div className="bg-white shadow roundy px-4 py-3 d-flex align-items-center justify-content-between mb-4">
-                  <div className="flex-grow-1 d-flex align-items-center">
-                    <div className="dot mr-3 bg-blue"></div>
-                    <div className="text">
-                      <h6 className="mb-0">New clients</h6><span className="text-gray">25 new clients</span>
-                    </div>
-                  </div>
-                  <div className="icon bg-blue text-white"><i className="fas fa-user-friends"></i></div>
-                </div>
+                
                 
               </div>
             

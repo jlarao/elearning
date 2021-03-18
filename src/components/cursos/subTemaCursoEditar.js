@@ -2,7 +2,7 @@ import React, {useState,  useContext} from 'react';
 import CursosContext from "../../context/cursos/cursosContext";
 
 
-const SubTemaCursoEditar = ({idSubTema, nombreSubT, idTema , ocultarFormSubTemaEdita}) => {
+const SubTemaCursoEditar = ({idSubTema, nombreSubT, idTema , ocultarFormSubTemaEdita }) => {
     const cursosContext =  useContext(CursosContext);
     const { editarSubTemaCurso } = cursosContext;
    

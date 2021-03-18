@@ -18,7 +18,7 @@ const Coursecontent = ({curso, temas, subTemas}) => {
                     <a href="#" role="button" data-toggle="collapse" data-target={"#collaseTema"+tema.idTema} aria-expanded="true" 
                     aria-controls={"collaseTema"+tema.idTema}><span>{tema.nombreTema}</span></a>
                 </div>
-                <div id={"collaseTema"+tema.idTema}  className={cont == 0 ? "collapse show " : "collapse"} aria-labelledby={"headingTema"+tema.idTema}
+                <div id={"collaseTema"+tema.idTema}  className={cont === 0 ? "collapse show " : "collapse"} aria-labelledby={"headingTema"+tema.idTema}
                  data-parent="#accordionExample">                
                     <div className="card-body">
                     {subTemas.map(s => {
@@ -27,7 +27,7 @@ const Coursecontent = ({curso, temas, subTemas}) => {
                     if(h.nombreTipo === "pdf"){
                         return(null)
                     }else{
-                        let url = h.urlHerramienta;
+                        
                         if(h.agregarVideo==="agregarVideo"){
                            /* if(contPrimerVideo== 0 ){
                                 videoPrimero = h;

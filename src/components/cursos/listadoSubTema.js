@@ -5,7 +5,7 @@ import AgregarVideo from "./agregarVideo";
 import EditarDoc from "./editarDoc";
 import AgregarDoc from "./agregarDoc";
 import SubTemaCursoEditar from "./subTemaCursoEditar";
-const ListadoSubTema = ({subTema}) => {
+const ListadoSubTema = ({subTema, maxFileUpload}) => {
   const cursosContext =  useContext(CursosContext);
   const {  eliminarHerramientaCurso, eliminarHerramientaDocCurso, eliminarSubTemaCurso} = cursosContext;
   
@@ -113,7 +113,7 @@ const ListadoSubTema = ({subTema}) => {
           </React.Fragment>);
           editVideo.push(
           <div className="col-12"  key={`idHerramientaCursoVideo${id}`}>
-            {mostrarFormVideo === `editarVideo${id}` ? <AgregarVideo ocultarFormEdicVideo={ocultarFormEdicVideo}  herramienta={herramienta}/> : null}
+            {mostrarFormVideo === `editarVideo${id}` ? <AgregarVideo ocultarFormEdicVideo={ocultarFormEdicVideo}  herramienta={herramienta}  maxFileUpload = {maxFileUpload}/> : null}
           </div>);
     }else{//almacenado exterior
       video.push(<React.Fragment key={`idHerramientaCursoF${id}`}>
@@ -133,7 +133,7 @@ const ListadoSubTema = ({subTema}) => {
        </React.Fragment>);
         editVideo.push(
           <div className="col-12 " key={`idHerramientaCursoVideo${id}`}>
-            {mostrarFormVideo === `editarVideo${id}`  ? <AgregarVideo ocultarFormEdicVideo={ocultarFormEdicVideo} herramienta={herramienta}/> : null}
+            {mostrarFormVideo === `editarVideo${id}`  ? <AgregarVideo ocultarFormEdicVideo={ocultarFormEdicVideo} herramienta={herramienta}  maxFileUpload = {maxFileUpload}/> : null}
           </div>);
     }
   }
@@ -189,7 +189,7 @@ const ListadoSubTema = ({subTema}) => {
             if(herramienta.estatus === "Activo"){                 
             return(<React.Fragment key={`idHerramientaCursoRecursoED${idH}`}>
           <div className="col-12 " key={`idHerramientaCursoRecursoEDd${idH}`}>
-            {mostrarFormDoc === `editarDocumento${idH}`  ? <EditarDoc ocultarFormEdicDoc={ocultarFormEdicDoc} herramienta={herramienta}/> : null}
+            {mostrarFormDoc === `editarDocumento${idH}`  ? <EditarDoc ocultarFormEdicDoc={ocultarFormEdicDoc} herramienta={herramienta} maxFileUpload = {maxFileUpload}/> : null}
           </div>
 
           
@@ -205,7 +205,7 @@ const ListadoSubTema = ({subTema}) => {
     </React.Fragment>
     );
     agregarDoc.push(<div className="col-12 " key={"agregarDocHerramientaId"+0}>
-    {mostrarFormAgregarDoc === `agregarDocumento${idTema}` ? <AgregarDoc ocultarFormAgregarDoc={ocultarFormAgregarDoc } idTema={idTema} /> : null}
+    {mostrarFormAgregarDoc === `agregarDocumento${idTema}` ? <AgregarDoc ocultarFormAgregarDoc={ocultarFormAgregarDoc } idTema={idTema}  maxFileUpload = {maxFileUpload} /> : null}
   </div>)
     
 }else{//almacenado exterior
@@ -226,7 +226,7 @@ const ListadoSubTema = ({subTema}) => {
     </div> 
     )
       agregarDoc.push(<div className="col-12 " key={"agregarDocHerramientaId"+0}>
-    {mostrarFormAgregarDoc === `agregarDocumento${subTema.subTemaCurso.idSubTema}` ? <AgregarDoc ocultarFormAgregarDoc={ocultarFormAgregarDoc } idTema={subTema.subTemaCurso.idSubTema} /> : null}
+    {mostrarFormAgregarDoc === `agregarDocumento${subTema.subTemaCurso.idSubTema}` ? <AgregarDoc ocultarFormAgregarDoc={ocultarFormAgregarDoc } idTema={subTema.subTemaCurso.idSubTema}  maxFileUpload = {maxFileUpload}/> : null}
   </div>)
 }
 //recurso.push(<AgregarVideo />);
@@ -265,7 +265,7 @@ const ListadoSubTema = ({subTema}) => {
 </div>  
 
 { mostrarFormSubTemaEditar === `SubTemaCursoEditar${subTema.subTemaCurso.idSubTema}`  &&
-<SubTemaCursoEditar  idSubTema = {subTema.subTemaCurso.idSubTema } nombreSubT = {subTema.subTemaCurso.nombreSubTema } idTema = {subTema.subTemaCurso.idTema} ocultarFormSubTemaEdita= {ocultarFormSubTemaEdita} />}
+<SubTemaCursoEditar  idSubTema = {subTema.subTemaCurso.idSubTema } nombreSubT = {subTema.subTemaCurso.nombreSubTema } idTema = {subTema.subTemaCurso.idTema} ocultarFormSubTemaEdita= {ocultarFormSubTemaEdita}  />}
  </div>
  
  

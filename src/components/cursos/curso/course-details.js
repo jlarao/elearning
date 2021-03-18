@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from "react-router-dom";
 const CourseDetails = ({ curso }) => {
     return ( 
         <div className="col-lg-4">
@@ -27,44 +27,23 @@ const CourseDetails = ({ curso }) => {
                                     </div>
                                     <div className="single-item">
                                         <div className="item-left">
-                                            <span><i className="fa fa-clock"></i> duration</span>
+                                            <span><i className="fa fa-clock"></i> duración</span>
                                         </div>
                                         <div className="item-right">
-                                            <span>16 hourse</span>
+                                            <span>{curso.duracion} </span>
                                         </div>
                                     </div>
+                                    
                                     <div className="single-item">
                                         <div className="item-left">
-                                            <span><i className="fa fa-file-video"></i> lecture</span>
-                                        </div>
-                                        <div className="item-right">
-                                            <span>20</span>
-                                        </div>
-                                    </div>
-                                    <div className="single-item">
-                                        <div className="item-left">
-                                            <span><i className="fa fa-shopping-cart"></i> enrolled</span>
+                                            <span><i className="fa fa-shopping-cart"></i> estudiantes</span>
                                         </div>
                                         <div className="item-right">
                                             <span>50 student</span>
                                         </div>
                                     </div>
-                                    <div className="single-item">
-                                        <div className="item-left">
-                                            <span><i className="fa fa-language"></i> language</span>
-                                        </div>
-                                        <div className="item-right">
-                                            <span>english</span>
-                                        </div>
-                                    </div>
-                                    <div className="single-item">
-                                        <div className="item-left">
-                                            <span><i className="fa fa-calendar"></i> deadline</span>
-                                        </div>
-                                        <div className="item-right">
-                                            <span>22 oct 2020</span>
-                                        </div>
-                                    </div>
+                                   
+                                   
                                     <div className="single-item">
                                         <div className="item-left">
                                             <span><i className="fa fa-share-alt"></i> share</span>
@@ -81,7 +60,8 @@ const CourseDetails = ({ curso }) => {
                                 </div>
                                 <div className="course-widget-buttons">
                                     
-                                    <a href="#" className="template-button">buy this course</a>
+                                    
+                                    <Link to="/comprar" className="template-button">Comprar</Link>
                                 </div>
                             </div>
                         </div>

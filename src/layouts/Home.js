@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {Route, NavLink, HashRouter} from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
 import '../assets/css/home.css';
 function Home() {
     const [popularCourses, setPopularCourses] = useState([]);
-    const [loading, setLoading] = useState(true);
+    //const [loading, setLoading] = useState(true);
 
     // Cargar una frase
   useEffect( () => {
@@ -20,13 +20,14 @@ function Home() {
     var courseList = [];
     for(let i=0; i < popularCourses.length; i++){
       if(popularCourses[i].poster===""){
-        var poster = require(`../assets/img/course-1.png`)
+        var poster ="";
+        poster = require(`../assets/img/course-1.png`)
         poster = poster.default;
       }else if(popularCourses[i].poster.startsWith("http")){
-        var poster = popularCourses[i].poster;
+        poster = popularCourses[i].poster;
         //console.log(poster);
       }else{
-        var poster = require(`../assets/img/${popularCourses[i].poster}`)
+        poster = require(`../assets/img/${popularCourses[i].poster}`)
         poster = poster.default;
       }
         
@@ -46,7 +47,7 @@ function Home() {
                 }}>
                     <div className="user abs aic flex" >
                         <div className="pic">
-                            <img src={popularCourses[i].avatar}  className="bl"/>
+                            <img src={popularCourses[i].avatar}  className="bl" alt="avatar user"/>
                         </div>
                         <div className="meta rel">
                             <h2 className="s15 name fontb cfff">{popularCourses[i].nombre}</h2>

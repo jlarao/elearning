@@ -57,9 +57,7 @@ const Course = (props) => {
                                     <div className="overview-video margin-top-30 overflow-hidden">
                                         <img src={curso.poster} alt="thumbnail" style={{"height":"100vh"}} className="img-fluid vh-100"/>
                                         <div className="video-play-button">
-                                            <a href="https://www.youtube.com/watch?v=8AGgbIQyqR8" className="button-video">
-                                                <i className="fa fa-play"></i>
-                                            </a>
+                                            
                                         </div>
                                     </div>
                                     <div className="overview-title margin-top-30">
@@ -114,7 +112,7 @@ const Course = (props) => {
                                                 <div className="single-instructor">
                                                     <span className="instructor-sign">{curso.nombre}</span>
                                                     <div className="instructor-image overflow-hidden">
-                                                        <img src={curso.avatar} alt="image" className="img-fluid " style={{"height":"30vh"}}/>
+                                                        <img src={curso.avatar} alt="instructor" className="img-fluid " style={{"height":"30vh"}} atl="avatar"/>
                                                     </div>
                                                     <div className="instructor-content">
                                                         <h4>{curso.nombre} {curso.apellidoPaterno} {curso.apellidoMaterno}</h4>

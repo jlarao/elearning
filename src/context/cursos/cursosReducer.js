@@ -1,7 +1,7 @@
 
-import {REGISTRO_EXITOSO,
-    OBTENER_USUARIO,
-    LOGIN_ERROR,
+import {//REGISTRO_EXITOSO,
+    //OBTENER_USUARIO,
+    //LOGIN_ERROR,
     OBTENER_CUSOS_INSTRUCTOR,
     CURSOS_ERROR,
     CURSOS_AGREGAR,
@@ -11,7 +11,7 @@ import {REGISTRO_EXITOSO,
     CURSOS_GUARDAR_TEMA_CURSO,
     CURSOS_FORM_SUBTEMA,
     CURSOS_SET_IDTEMA,
-    CURSOS_GUARDAR_SUBTEMA_CURSO,
+    //CURSOS_GUARDAR_SUBTEMA_CURSO,
     CURSOS_OBTENER_SUBTEMAS_CURSO,
     CURSOS_VACIAR_SUBTEMAS_CURSO,
     CURSOS_EDICION_HERRAMIENTA,
@@ -27,7 +27,9 @@ import {REGISTRO_EXITOSO,
     LIMPIAR_STATE,
     LIMPIAR_MENSAJE,
     LOADING_CURSO,
-    OBTENER_CURSOS_ALUMNO
+    OBTENER_CURSOS_ALUMNO,
+    MAX_FILE_UPLOAD,
+    MAX_FILE_UPLOAD_ERROR
     
 } from "../../types";
 
@@ -52,10 +54,11 @@ export default (state, action) =>{
             return{
                 ...state,
                 cursos: [...state.cursos, action.payload],
-                redirect: `/curso-detalles/${action.payload.id}`
+                redirect: `/curso-editar/${action.payload.id}`
             }
             case CURSOS_EDITAR:
                 //mensaje: action.payload.mensaje
+                console.log(action.payload);
             return{
                 ...state,
                 cursos: [...state.cursos, action.payload],
@@ -75,7 +78,8 @@ export default (state, action) =>{
                 que_aprenderas:action.payload.que_aprenderas,
                 idCategoria: action.payload.idCategoria,
                 precio: action.payload.precio,
-                cargando: false
+                cargando: false,
+                estatus: action.payload.estatus
             }
         case CURSOS_FORM_TEMACURSO:
             return{
@@ -266,7 +270,7 @@ export default (state, action) =>{
                 descripcion:"",
                 requisitos:"",
                 que_aprenderas:"",
-                idCategoria: 0,
+                
                 precio: 0,
                 mensaje:"",
                 fechaRegistro:"",        
@@ -287,6 +291,16 @@ export default (state, action) =>{
             return {
             ...state,
             cargando: true
+        }
+        case MAX_FILE_UPLOAD:
+            return {
+            ...state,
+            maxFileUpload: action.payload
+        }
+        case MAX_FILE_UPLOAD_ERROR:
+            return {
+            ...state,
+            maxFileUpload: "No definido"
         }
         default: return state;                
                 

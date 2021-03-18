@@ -1,8 +1,8 @@
-import React, { useContext , useState, useEffect} from "react";
-import axios from "axios";
+import React from "react";
+//import axios from "axios";
 import { NavLink } from "react-router-dom";
-import AuthContext from '../context/authentication/authContext';
-import AlertaContext from '../context/alerta/alertaContext';
+//import AuthContext from '../context/authentication/authContext';
+//import AlertaContext from '../context/alerta/alertaContext';
 
 const Registrar=(props) => {       
     return(   
@@ -28,7 +28,7 @@ const Registrar=(props) => {
                   </div>
                 </div>
                 <div className="right ml-5 ml-sm-0 pl-3 pl-sm-0 text-violet">
-                  <h5></h5>
+                  
                 </div>
               </div>
              

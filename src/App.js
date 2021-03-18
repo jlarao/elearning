@@ -24,6 +24,8 @@ import  tokenAuth  from "./config/token";
 //redux
 import {Provider} from "react-redux";
 import store from "./store";
+import ComprarCurso from './components/cursos/comprar';
+import Adicional from './components/cursos/adicional';
 
 // revisar token
 const token = localStorage.getItem('token');
@@ -50,6 +52,7 @@ function App() {
         <Route path="/registrar" component={Registrar}/>
         <Route path="/registroexitoso" component={RegistroExitoso}/>
         <Route path="/course/:courseid" component={Course} />
+        <Route path="/comprar" component={ComprarCurso} />
                  
         <RutaPrivada exact path="/dashboardAdmin" component={DashboardAdmin}/>
         <RutaPrivada exact path="/dashboardP" component={Dashboard}/>        
@@ -59,6 +62,7 @@ function App() {
         <RutaPrivada exact path="/curso-tomar/:courseid" component={Reproducir}/>
         <RutaPrivada exact path="/instructor-edit/:id" component={EditarDatosPersonalesInstructor}/>
         
+        <RutaPrivada exact path="/adicional" component={Adicional}/>
     </div>
     </Provider>
 </HashRouter> 

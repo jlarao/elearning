@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import Navbar from "./navbar";
+import React from "react";
+//import Navbar from "./navbar";
 import Sidebar from "./sidebar";
 import Contenido from "./Contenido";
 

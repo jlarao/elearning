@@ -1,5 +1,4 @@
 import React, { useEffect, useContext, useState } from "react";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import AuthContext from '../context/authentication/authContext';
 import AlertaContext from "../context/alerta/alertaContext";
@@ -29,11 +28,11 @@ useEffect(()=> {
     
     if(usuarioLogin){
       console.log(usuarioLogin.idRol);
-      if(usuarioLogin.idRol=="1"){
+      if(usuarioLogin.idRol==="1"){
         console.log("admin");
         props.history.push("/dashboardAdmin");
       }
-      else if(usuarioLogin.idRol=="2"){
+      else if(usuarioLogin.idRol==="2"){
         console.log("profesor");
         props.history.push("/dashboardP");
       }else{
@@ -89,9 +88,7 @@ useEffect(()=> {
             <div className="row">
                 <p></p>
 			      </div>
-            <div className="row">
-                <h3></h3>
-            </div>
+            
              
             <div className="row">
               <div className="col-lg-12 mb-5">

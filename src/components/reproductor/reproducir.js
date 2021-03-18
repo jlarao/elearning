@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import VideoPlayerUrl from "./video";
 //actions redux
 import  { obtenerCursoContenidoReproductor } from "../../actions/cursoReproductorActions";
+import PreLoader from '../cursos/curso/preloader';
 const Reproducir = (props) => {
     const [mostrarReproductorVideo, setMostrarReproductorVideo] = useState(0);   
     //redux
@@ -22,6 +23,8 @@ const Reproducir = (props) => {
         if(loading==="finalizado")
             primerVideoReproductor();
     }, [loading])
+    if(curso ===null)
+    return (<PreLoader />)
     const primerVideoReproductor=()=>{
         var contPrimerVideo = 0;
         var videoPrimero;
@@ -32,10 +35,10 @@ const Reproducir = (props) => {
                 if(s.subTemaCurso.idTema === tema.idTema  ){
                     return s.herramientasubTema.map(h => {
                     if(h.nombreTipo !== "pdf"){
-                        let url = h.urlHerramienta;                       
+                        //let url = h.urlHerramienta;                       
                         if(h.agregarVideo==="agregarVideo"){
                             if(h.agregarVideo==="agregarVideo"){
-                                if(contPrimerVideo== 0 ){
+                                if(contPrimerVideo=== 0 ){
                                     videoPrimero = h;
                                     contPrimerVideo=1;
                                 }

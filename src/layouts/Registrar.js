@@ -54,7 +54,7 @@ const {nombre, apellidop, apellidom,email, genero, password, confirmar} = usuari
     }
 
     const manejadorBoton = async ()=>{
-      //let url = 'http://localhost:81/rest/api/registrarUsuario' ;
+      //let url = process.env.REACT_APP_BACKEND_URL+'registrarUsuario' ;
       
       
       if(nombre.trim()==="" && apellidop.trim()==="" && usuario.genero==="" 
@@ -117,10 +117,7 @@ const {nombre, apellidop, apellidom,email, genero, password, confirmar} = usuari
             <div className="row">
                 <p></p>
 			      </div>
-            <div className="row">
-                <h3></h3>
-            </div>
-             
+            
             <div className="row">
               <div className="col-lg-12 mb-5">
                 <div className="card">

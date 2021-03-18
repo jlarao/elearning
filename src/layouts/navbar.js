@@ -6,7 +6,7 @@ import CursosContext  from "../context/cursos/cursosContext";
 
 function Navbar(props) {
   const authContext  = useContext(AuthContext);
-  const { usuarioLogin,  usuarioAutenticado, cerrarSesion} = authContext;
+  const { usuarioLogin,   cerrarSesion} = authContext;
 
   const cursosContext = useContext(CursosContext);
   const { limpiarState } = cursosContext;
@@ -46,7 +46,7 @@ function Navbar(props) {
               </div>
             </form>
           </li>
-          {usuarioLogin ? (<React.Fragment><li className="nav-item dropdown mr-3"><a id="notifications" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle text-gray-400 px-1"><i className="fa fa-bell"></i><span className="notification-icon"></span></a>
+          {usuarioLogin ? (<React.Fragment><li className="nav-item dropdown mr-3"><a id="notifications" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle text-gray-400 px-1"><i className="fa fa-bell"></i><span className="notification-icon"></span></a>
             <div aria-labelledby="notifications" className="dropdown-menu"><a href="#" className="dropdown-item">
                 <div className="d-flex align-items-center">
                   <div className="icon icon-sm bg-violet text-white"><i className="fab fa-twitter"></i></div>
@@ -75,7 +75,7 @@ function Navbar(props) {
               <div className="dropdown-divider"></div><a href="#" className="dropdown-item text-center"><small className="font-weight-bold headings-font-family text-uppercase">View all notifications</small></a>
             </div>
           </li>
-          <li className="nav-item dropdown ml-auto"><a id="userInfo" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle"><img src={usuarioLogin.avatar ==="" ? avatar: usuarioLogin.avatar} alt="Jason Doe" style={styleli} className="img-fluid rounded-circle shadow"/></a>
+          <li className="nav-item dropdown ml-auto"><a id="userInfo" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" className="nav-link dropdown-toggle"><img src={usuarioLogin.avatar ==="" ? avatar: usuarioLogin.avatar} alt="Jason Doe" style={styleli} className="img-fluid rounded-circle shadow"/></a>
             {usuarioLogin.idRol==="1" && (<div aria-labelledby="userInfo" className="dropdown-menu"><NavLink to="/dashboardAdmin" className="dropdown-item"><strong className="d-block text-uppercase headings-font-family">{ usuarioLogin.firstname }</strong><small>{ usuarioLogin.lastname }</small></NavLink>
               <div className="dropdown-divider"></div><a href="#" className="dropdown-item">Settings</a><a href="#" className="dropdown-item">Activity log       </a>
               <div className="dropdown-divider"></div><button  className="dropdown-item" onClick={ cerrarSesionBtn }><div className="dropdown-item">Cerrar Sesión</div></button>

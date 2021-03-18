@@ -2,7 +2,7 @@ import React, {useRef, useState, useContext} from 'react';
 import axios, {CancelToken, isCancel} from "axios";
 import CursosContext from "../../context/cursos/cursosContext";
 
-const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
+const AgregarVideo = ({ocultarFormEdicVideo, herramienta, maxFileUpload}) => {
   const cursosContext =  useContext(CursosContext);
   const { edicionHerramientaCurso } = cursosContext;
     const cancelSubirVideo = useRef(null);    
@@ -68,7 +68,7 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
           },
           cancelToken: new CancelToken( cancel => cancelSubirVideo.current = cancel )
         };
-        axios.post('http://localhost:81/rest/api/video',formData, options)
+        axios.post(process.env.REACT_APP_BACKEND_URL+'video',formData, options)
         .then(res =>{
           console.log(res);
           setporcentajeSubidoVideo(100)
@@ -204,7 +204,10 @@ const AgregarVideo = ({ocultarFormEdicVideo, herramienta}) => {
                             <span  className="text-primary cursor-pointer" style={{"cursor":"pointer"}}onClick={cancelUploadVideo}>Cancelar</span>                         
                           </div></div>
                           </React.Fragment>}
-            </div>            
+                          
+            </div>
+            <label className="col-md-3 form-control-label"></label>
+                        <div className="col-md-9"><span> Maximo tamaño de archivo permitido {maxFileUpload} MB</span></div>            
         </div>}
 
         {radioVideo === "agregarUrl" &&

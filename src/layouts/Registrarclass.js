@@ -35,7 +35,7 @@ class Registrar extends React.Component{
     }
 
     manejadorBoton = async ()=>{
-      let url = 'http://localhost:81/rest/api/registrarUsuario' ;
+      let url = process.env.REACT_APP_BACKEND_URL+'registrarUsuario' ;
       console.log(this.state.form);
       
       if(this.state.form.nombre.trim()!=="" && this.state.form.apellidop.trim()!=="" && this.state.form.genero.trim()!=="" && this.state.form.email.trim()!==""){

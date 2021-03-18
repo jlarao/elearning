@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 //import {  useDispatch } from "react-redux";
 //import { setPrimerVideo } from "../../actions/cursoReproductorActions";
 const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo}) => {
     //const dispatch = useDispatch();
     //const setPrimerVideoReproducir = e => dispatch(setPrimerVideo(e));
      
-    const [first,setfirst] = useState(true);
+    //const [first,setfirst] = useState(true);
     //<!-- Preloader Starts -->
     if(curso === null) return (        
         <div className="preloader" id="preloader">
@@ -25,7 +25,7 @@ const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo}) => {
     const Videos=[];
     var cont = 0;
     var contPrimerVideo = 0;
-    var videoPrimero;
+    //var videoPrimero;
     temas.map(tema => {
         
         Videos.push(
@@ -33,7 +33,7 @@ const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo}) => {
                 <div className="card-header" id={"headingTema"+tema.idTema}>
                     <a href="#" role="button" data-toggle="collapse" data-target={"#collaseTema"+tema.idTema} aria-expanded="true" aria-controls={"collaseTema"+tema.idTema}>{tema.nombreTema}</a>
                 </div>
-                <div id={"collaseTema"+tema.idTema}  className={cont == 0 ? "collapse show " : "collapse"} aria-labelledby={"headingTema"+tema.idTema} data-parent="#accordionExample">                
+                <div id={"collaseTema"+tema.idTema}  className={cont === 0 ? "collapse show " : "collapse"} aria-labelledby={"headingTema"+tema.idTema} data-parent="#accordionExample">                
                     <div className="card-body">
                     {subTemas.map(s => {
             if(s.subTemaCurso.idTema === tema.idTema  ){
@@ -42,17 +42,17 @@ const ListadoVideos = ({curso, temas, subTemas, btnSetReproductorVideo}) => {
                         return(
                             <div className="single-course-video-pdf" key={"idHerramienta"+h.idHerramientaCurso}>
                         <button className="button-video-pdf">
-                        <a target="_blank" download href={h.urlHerramienta} ><i className="fa fa-file-pdf"></i> {h.nombreHerramienta}
+                        <a target="_blank" download href={h.urlHerramienta} rel="noopener noreferrer"><i className="fa fa-file-pdf"></i> {h.nombreHerramienta}
                             </a>
                         </button>
                         
                     </div>
                         )
                     }else{
-                        let url = h.urlHerramienta;
+                        
                         if(h.agregarVideo==="agregarVideo"){
-                            if(contPrimerVideo== 0 ){
-                                videoPrimero = h;
+                            if(contPrimerVideo=== 0 ){
+                                //videoPrimero = h;
                                 contPrimerVideo=1;
                             }
                             return(

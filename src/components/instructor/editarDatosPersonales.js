@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect,  useContext } from 'react';
 import AlertaContext from '../../context/alerta/alertaContext';
 import { useDispatch, useSelector } from "react-redux";
 import { obtenerDatosInstructor, limpiarMensaje } from "../../actions/instructorActions";
@@ -32,7 +32,7 @@ const EditarDatosPersonalesInstructor = (props) => {
     }
 
     const alertaContext = useContext(AlertaContext);
-    const {alerta, mostrarAlerta}  = alertaContext;    
+    const {alerta}  = alertaContext;    
 
 if(loading){
   return (<p>Cargando...</p>);

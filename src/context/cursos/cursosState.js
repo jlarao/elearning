@@ -14,7 +14,7 @@ import {
     CURSOS_GUARDAR_TEMA_CURSO,
     CURSOS_FORM_SUBTEMA,
     CURSOS_SET_IDTEMA,
-    CURSOS_GUARDAR_SUBTEMA_CURSO,
+  //  CURSOS_GUARDAR_SUBTEMA_CURSO,
     CURSOS_OBTENER_SUBTEMAS_CURSO,
     CURSOS_VACIAR_SUBTEMAS_CURSO,
     CURSOS_EDICION_HERRAMIENTA,
@@ -31,7 +31,9 @@ import {
     LIMPIAR_MENSAJE,
     LOADING_CURSO,
     OBTENER_CURSOS_ALUMNO,
-    OBTENER_CURSOS_ALUMNO_ERROR
+   // OBTENER_CURSOS_ALUMNO_ERROR,
+    MAX_FILE_UPLOAD,
+    MAX_FILE_UPLOAD_ERROR
 } from "../../types";
 
 
@@ -46,7 +48,7 @@ const CursosState = props => {
         descripcion:"",
         requisitos:"",
         que_aprenderas:"",
-        idCategoria: 0,
+        estatus: "",
         precio: 0,
         mensaje:"",
         fechaRegistro:"",        
@@ -57,7 +59,8 @@ const CursosState = props => {
         formSubTema: false,
         idTema:null,
         subTemasCurso: [],
-        cargando: false
+        cargando: false,
+        maxFileUpload: 0
     }
     const [state, dispatch] = useReducer(CursosReducer, initialState);
 
@@ -69,7 +72,7 @@ const CursosState = props => {
                 tokenAuth(token);
             }   
             try {
-                //const api = await fetch('http://localhost:81/rest/api/cursos?page=0');
+                //const api = await fetch(process.env.REACT_APP_BACKEND_URL+'cursos?page=0');
                 //const cursos = await api.json();
                 const api = await clienteAxios.get("cursos?instruc=0");
                 console.log(api); 
@@ -146,7 +149,7 @@ const CursosState = props => {
                     "nombreCurso": curso.nombre,
                     "categoria": curso.categoria,                    
                     "poster": curso.poster,
-                    "duracion": "",
+                    "duracion": curso.horas +":"+ curso.minutos +":"+ curso.segundos,
                     "idCategoria": curso.idCategoria ,
                     "descripcion": curso.descripcion,
                     "requisitos": curso.requisitos,
@@ -669,7 +672,7 @@ const CursosState = props => {
                 tokenAuth(token);
             }   
             try {
-                //const api = await fetch('http://localhost:81/rest/api/cursos?page=0');
+                //const api = await fetch(process.env.REACT_APP_BACKEND_URL+'cursos?page=0');
                 //const cursos = await api.json();
                 const api = await clienteAxios.get("cursos?al=0");
                 console.log(api); 
@@ -684,6 +687,35 @@ const CursosState = props => {
                 }
                 dispatch({
                     type: CURSOS_ERROR,
+                    payload: alert
+                })
+            }          
+        }
+
+        const obtenerMaxFileUpload = async() => {            
+            const token = localStorage.getItem('token');           
+            if(token){
+                //enviar token por header
+                tokenAuth(token);
+            } 
+            dispatch({
+                type: LOADING_CURSO
+            })
+            try {
+                const response = await clienteAxios.get("video?maxFile=0");
+                console.log(response.data);                
+                //console.log(cursos); 
+                dispatch({
+                type: MAX_FILE_UPLOAD,
+                payload: response.data
+            })                  
+            } catch (error) {
+                const alert = {
+                    msg: "Hubo un error",
+                    categoria: "alert"
+                }
+                dispatch({
+                    type: MAX_FILE_UPLOAD_ERROR,
                     payload: alert
                 })
             }          
@@ -708,6 +740,9 @@ const CursosState = props => {
                 idCategoria: state.idCategoria,
                 precio: state.precio,
                 cargando: state.cargando,
+                maxFileUpload: state.maxFileUpload,
+                estatus: state.estatus,
+                duracion: state.duracion,
                 obtenerCursosUsuarioInstructor,
                 agregarCurso,
                 obtenerCursosPorId,
@@ -731,7 +766,8 @@ const CursosState = props => {
                 editarCurso,
                 limpiarState,
                 limpiarMensaje,
-                obtenerCursosUsuarioAlumno
+                obtenerCursosUsuarioAlumno,
+                obtenerMaxFileUpload
                 }}
         >
             {props.children}

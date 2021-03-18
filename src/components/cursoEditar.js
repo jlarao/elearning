@@ -11,20 +11,24 @@ import Modal from "./functions/function";
 const  CursoEditar = (props) =>{   
   
   const cursosContext =  useContext(CursosContext);
-  const {  cargando, precio, id, idCategoria, poster, nombreCurso,descripcion,requisitos,que_aprenderas, 
+  const {  duracion, estatus, maxFileUpload, cargando, precio, id, idCategoria, poster, nombreCurso,descripcion,requisitos,que_aprenderas, 
     mensaje, subTemasCurso, temasCurso,formTemaCurso ,   
     obtenerCursosPorId, mostrarFormTemaCurso,obtenerTemaCursoPorIdCurso,setIdTema,
-     obtenerSubTemasByTemaId, eliminarTemaCurso, limpiarMensaje} = cursosContext;
+     obtenerSubTemasByTemaId, eliminarTemaCurso, limpiarMensaje, obtenerMaxFileUpload} = cursosContext;
   const alertaContext = useContext(AlertaContext);
-  const {alerta, mostrarAlerta}  = alertaContext;
+  const { mostrarAlerta}  = alertaContext;
   
   const [temaForm, setTemaForm] = useState(0);
   const [subTemaForm, setSubTemaForm] = useState(0);
     
            
 
-    useEffect(() => {        
-        obtenerCursoById(props.match.params.courseid);
+    useEffect(() => {
+        
+        if( nombreCurso === "")        
+          obtenerCursoById(props.match.params.courseid);
+        if( props.match.params.courseid !== id)        
+          obtenerCursoById(props.match.params.courseid);
         if(mensaje){
           mostrarAlerta(mensaje.msg, mensaje.categoria);
           console.log(mensaje);
@@ -44,6 +48,7 @@ const  CursoEditar = (props) =>{
       obtenerCursosPorId(id);
       obtenerTemaCursoPorIdCurso(id);
       obtenerSubTemasByTemaId(id);
+      obtenerMaxFileUpload();
     }
     
     if(cargando){
@@ -107,7 +112,7 @@ const  CursoEditar = (props) =>{
       <div id={"accordionSubTema"} >
       {subTemasCurso.map(subTema=>{
         if(subTema.subTemaCurso.idTema === id){
-        return <ListadoSubTema subTema={subTema} key ={"subTema"+subTema.subTemaCurso.idSubTema}/>
+        return <ListadoSubTema subTema={subTema} key ={"subTema"+subTema.subTemaCurso.idSubTema} maxFileUpload={maxFileUpload} />
         }else {
           return null;
         }
@@ -117,7 +122,7 @@ const  CursoEditar = (props) =>{
       </div>
 
 
-      {subTemaForm===id ? <SubTemaCurso  btnSubTemaOcultarForm={btnSubTemaOcultarForm} idTema={id} /> : null}
+      {subTemaForm===id ? <SubTemaCurso  btnSubTemaOcultarForm={btnSubTemaOcultarForm} idTema={id} maxFileUpload={maxFileUpload}/> : null}
       
 
       <div className="col-lg-12 text-right mb-4"><button className ="btn btn-info" onClick={ ()=>{btnSubTemaAgregar(id)}} title="Agregar contenido"><i className="fas fa-plus ml-auto" ></i></button></div>
@@ -142,7 +147,7 @@ const  CursoEditar = (props) =>{
         <div className="row">
         <div className="col-lg-12 mb-2">
               <CursoContenidoEditar nombreC={nombreCurso} id={id} idC={idCategoria} pos={poster} desc={descripcion} 
-              req={requisitos} que_={que_aprenderas} precioCurso = {precio}/>
+              req={requisitos} que_={que_aprenderas} precioCurso = {precio} status={estatus} dura={duracion}/>
                
           </div>
         </div>

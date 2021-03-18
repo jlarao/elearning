@@ -24,11 +24,11 @@ const ContenidoTabVideo = ({curso}) => {
             <div className="tab-content">
                                 <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                     <div className="video-tab-title">
-                                        <h5>about this course</h5>
+                                        <h5>Descripcion del curso</h5>
                                     </div>
                                     <p className="margin-top-20">{curso.descripcion}</p>
                                     <div className="video-tab-title margin-top-30">
-                                        <h5>what you'll learn?</h5>
+                                        <h5>¿Que arenderas?</h5>
                                     </div>
                                     <div className="content-list-items margin-top-20">
                                         <div className="row">
@@ -36,31 +36,20 @@ const ContenidoTabVideo = ({curso}) => {
                                         </div>
                                     </div>
                                     <div className="video-tab-title margin-top-30">
-                                        <h5>by the numbers</h5>
+                                        <h5></h5>
                                     </div>
                                     <div className="content-list-items margin-top-20">
                                         <div className="row">
                                             <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> skill level : beginner</span>
+                                                <span className="single-list"><i className="fa fa-checks"></i> </span>
                                             </div>
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> lecture : 40</span>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> student : 50</span>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> video length : 02:00</span>
-                                            </div>
-                                            <div className="col-lg-6">
-                                                <span className="single-list"><i className="fa fa-check"></i> language : english</span>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <div className="video-tab-title margin-top-30">
-                                        <h5>certificate</h5>
+                                        <h5></h5>
                                     </div>
-                                    <p className="margin-top-20">Get Course certificate by completing entire course</p>
+                                    <p className="margin-top-20"></p>
                                     
                                    
                                    
@@ -79,7 +68,7 @@ const ContenidoTabVideo = ({curso}) => {
                                     <div className="hr-line"></div>
                                     <div className="single-question">
                                         <div className="question-image">
-                                            <img src="https://placeimg.com/100/100/people?tutors-10" alt="image"/>
+                                            <img src="https://placeimg.com/100/100/people?tutors-10" alt="ten-answers"/>
                                         </div>
                                         <div className="question-content">
                                             <h6>how to install wordpress in cpanel?</h6>
@@ -93,7 +82,7 @@ const ContenidoTabVideo = ({curso}) => {
                                     </div>
                                     <div className="single-question">
                                         <div className="question-image">
-                                            <img src="https://placeimg.com/100/100/people?tutors-11" alt="image"/>
+                                            <img src="https://placeimg.com/100/100/people?tutors-11" alt="single"/>
                                         </div>
                                         <div className="question-content">
                                             <h6>how to install wordpress in cpanel?</h6>
@@ -107,7 +96,7 @@ const ContenidoTabVideo = ({curso}) => {
                                     </div>
                                     <div className="single-question">
                                         <div className="question-image">
-                                            <img src="https://placeimg.com/100/100/people?tutors-12" alt="image"/>
+                                            <img src="https://placeimg.com/100/100/people?tutors-12" alt="questions"/>
                                         </div>
                                         <div className="question-content">
                                             <h6>how to install wordpress in cpanel?</h6>
@@ -121,7 +110,7 @@ const ContenidoTabVideo = ({curso}) => {
                                     </div>
                                     <div className="single-question">
                                         <div className="question-image">
-                                            <img src="https://placeimg.com/100/100/people?tutors-13" alt="image"/>
+                                            <img src="https://placeimg.com/100/100/people?tutors-13" alt="question"/>
                                         </div>
                                         <div className="question-content">
                                             <h6>how to install wordpress in cpanel?</h6>
@@ -148,7 +137,7 @@ const ContenidoTabVideo = ({curso}) => {
                                 <div className="tab-pane  fade tab-four-content tab-content-bg announcement-content lost" id="menu3" role="tabpanel" aria-labelledby="menu3-tab">
                                     <div className="announcement-top">
                                         <div className="top-image">
-                                            <img src="https://placeimg.com/100/100/people?tutors-15" alt="image"/>
+                                            <img src="https://placeimg.com/100/100/people?tutors-15" alt="top-comment"/>
                                         </div>
                                         <div className="top-name">
                                             <h6>john doe</h6>
@@ -165,7 +154,7 @@ const ContenidoTabVideo = ({curso}) => {
                                     <p className="margin-top-20">I will continue to do my best to respond to as many questions as possible but only one person, regularly I spend 4-5 hours daily on this and with over 440000 students as you can image that its a lot of work.</p>
                                     <div className="announcement-comment margin-top-30">
                                         <div className="comment-image">
-                                            <img src="https://placeimg.com/100/100/people?tutors-14" alt="image"/>
+                                            <img src="https://placeimg.com/100/100/people?tutors-14" alt="comments"/>
                                         </div>
                                         <div className="comment-box">
                                             <form action="#">

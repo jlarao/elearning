@@ -3,13 +3,22 @@ import axios, {CancelToken, isCancel} from "axios";
 import AlertaContext from "../../context/alerta/alertaContext";
 import CursosContext from "../../context/cursos/cursosContext";
 import PreLoader from "../../components/cursos/curso/course";
-const CursoContenidoEditar = ({nombreC, id, idC, pos, desc, req, que_, precioCurso}) => {
+const CursoContenidoEditar = ({nombreC, id, idC, pos, desc, req, que_, precioCurso, status, dura}) => {
   const alertaContext = useContext(AlertaContext);
   const { alerta } = alertaContext;
   const cursosContext = useContext(CursosContext);
   const { editarCurso  } = cursosContext;
   console.log(id);
-  
+  const duracionF = dura.split(":");
+  let hr="00";
+  let min="00";
+  let seg="00";
+
+  if (duracionF.length===3){
+   hr=duracionF[0];
+   min=duracionF[1];
+   seg=duracionF[2];
+  }
   const [datos, setDatos] = useState({
     curso:  {
       idCurso: id,
@@ -20,7 +29,12 @@ const CursoContenidoEditar = ({nombreC, id, idC, pos, desc, req, que_, precioCur
       descripcion: desc,
       requisitos: req,
       que_aprenderas: que_,
-      precio: precioCurso
+      precio: precioCurso,
+      estatus: status,
+      horas: hr,
+      minutos: min,
+      segundos: seg,
+      duracion: dura
       },
     error: false,
     errorMsg: ""       
@@ -32,7 +46,12 @@ const { nombreCurso, idCategoria,
   descripcion,
   requisitos,
   que_aprenderas,
-  precio } = curso;
+  precio,
+  estatus,
+  duracion,
+  horas,
+  minutos,
+  segundos } = curso;
   console.log(nombreCurso);
   if(!!(nombreCurso))
     <PreLoader />
@@ -48,7 +67,18 @@ const   manejadorSubmit = e =>{
         if(datos.curso.que_aprenderas.trim()!==""){
     if(datos.curso.idCategoria.trim()!==""){
       if(datos.curso.poster.trim()!==""){                                  
-            console.log(datos);                            
+            
+            const du = datos.curso.horas + ":"+ datos.curso.minutos +":"+ datos.curso.segundos;
+            console.log(du);
+            
+           
+              setDatos({
+                ...datos,
+                    curso: {
+                      ...datos.curso,
+                      'duracion': datos.curso.horas + ":"+ datos.curso.minutos +":"+ datos.curso.segundos        
+                }})
+              console.log(datos);                          
             editarCurso(datos.curso);
             setDatos({
               ...datos,
@@ -174,7 +204,10 @@ const consultarAPI =async  () => {
   const api = await fetch(process.env.REACT_APP_BACKEND_URL+'categorias?page=0');
   const frase = await api.json()
   setCategorias(frase);            
-} 
+}
+ const horaA = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"];
+ const minA = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59"];
+  
     return ( 
         <div className="card">
               <div className="card-header">
@@ -240,6 +273,31 @@ const consultarAPI =async  () => {
                             <input type="number" className="form-control" name="precio" onChange={manejadorChange} value={precio} />
                           </div>
                         </div>
+
+                        <div className="form-group row">
+                          <label className="col-md-3 form-control-label">Duración</label>
+                          <div className="col-md-2">Horas
+                          <select name="horas" className="form-control" onChange={manejadorChange} value={horas}>                              
+                              {horaA.map(c=>(
+                              <option key={c} value={c}>{c}</option>))
+                              }
+                            </select>
+                            </div>
+                            <div className="col-md-2">Minutos
+                            <select name="minutos" className="form-control" onChange={manejadorChange} value={minutos}>  
+                              {minA.map(c=>(
+                              <option key={c} value={c}>{c}</option>))
+                              }
+                            </select>
+                            </div>
+                            <div className="col-md-2">Segundos
+                            <select name="segundos" className="form-control" onChange={manejadorChange} value={segundos}>                      
+                              {minA.map(c=>(
+                              <option key={c} value={c}>{c}</option>))
+                              }
+                            </select>
+                          </div>
+                        </div>
   
                         <div className="form-group row">
                           <label className="col-md-3 form-control-label">Categoria</label>
@@ -252,12 +310,21 @@ const consultarAPI =async  () => {
                             </select>
                           </div>                      
                         </div>
+                        <div className="form-group row">
+                          <label className="col-md-3 form-control-label">Estatus</label>
+                          <div className="col-md-9 select mb-3">
+                            <select name="estatus" className="form-control" onChange={manejadorChange} value={estatus}>                              
+                              <option value="Activo">Activo</option>
+                              <option value="Suspendido">Suspendido</option>
+                            </select>
+                          </div>                      
+                        </div>
                         
   
                         <div className="form-group row">
                           <label className="col-md-3 form-control-label"></label>
                           <div className="col-md-9">
-                            <img src={poster} className="img-fluid " style={{"height":"100vh"}} name="imagen" />
+                            <img src={poster} className="img-fluid " style={{"height":"100vh"}} name="imagen" alt="poster"/>
                           </div>
                         </div>
 
@@ -275,7 +342,11 @@ const consultarAPI =async  () => {
 
                         <div className="form-group row">
                           <div className="col-md-9 ml-auto">
-                            <input type="submit" value="Guardar" className="btn btn-primary" data-toggle="collapse" href="#collapseOneE"/>                          
+                            <input type="submit" value="Guardar" className="btn btn-primary" />                            
+                            <button className="btn btn-danger ml-1" type="button" data-toggle="collapse" data-target="#collapseOneE"
+                            aria-expanded="false" aria-controls="collapseOneE">
+                            Cerrar
+                          </button>
                           </div>
                         </div>                   
                                            

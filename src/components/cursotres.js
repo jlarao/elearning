@@ -65,7 +65,7 @@ import axios, {CancelToken, isCancel} from "axios";
       },
       cancelToken: new CancelToken( cancel => cancelSubirVideo.current = cancel )
     };
-    axios.post('http://localhost:81/rest/api/video',formData, options)
+    axios.post(process.env.REACT_APP_BACKEND_URL+'video',formData, options)
     .then(res =>{
       console.log(res);
       setporcentajeSubidoVideo(100)
@@ -115,7 +115,7 @@ import axios, {CancelToken, isCancel} from "axios";
       },
       cancelToken: new CancelToken( cancel => cancelSubirPdf.current = cancel )
     };
-    axios.post('http://localhost:81/rest/api/pdf',formData, options).then(res =>{
+    axios.post(process.env.REACT_APP_BACKEND_URL+'pdf',formData, options).then(res =>{
       console.log(res);
       setporcentajeSubidoPdf(100)
       setTimeout(setporcentajeSubidoPdf(0) ,2000)

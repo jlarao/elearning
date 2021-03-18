@@ -2,13 +2,13 @@ import React,{useState, useEffect, useRef, useContext} from 'react';
 import axios, {CancelToken, isCancel} from "axios";
 import AlertaContext from "../context/alerta/alertaContext";
 import CursosContext from "../context/cursos/cursosContext";
-import AuthContext from '../context/authentication/authContext';
+//import AuthContext from '../context/authentication/authContext';
 const  CursoPasoUno = (props) =>{  
   const alertaContext = useContext(AlertaContext);
   const {alerta, mostrarAlerta}  = alertaContext;
   const cursosContext =  useContext(CursosContext);
   const { redirect, mensaje ,agregarCurso } = cursosContext;
-  const authContext = useContext(AuthContext);
+  //const authContext = useContext(AuthContext);
   //const { mensaje } = authContext;
 
 const [porcentajeSubidoImagen, setporcentajeSubidoImagen] = useState(0);
@@ -92,7 +92,7 @@ useEffect(()=> {
   }, []); 
   
   const consultarAPI =async  () => {    
-    const api = await fetch('http://localhost:81/rest/api/categorias?page=0');
+    const api = await fetch(process.env.REACT_APP_BACKEND_URL+'categorias?page=0');
     const frase = await api.json()
     setCategorias(frase);            
   }  
@@ -113,7 +113,7 @@ useEffect(()=> {
       },
       cancelToken: new CancelToken( cancel => cancelSubirPoster.current = cancel )
     };
-    axios.post('http://localhost:81/rest/api/imagen',formData, options).then(res =>{
+    axios.post(process.env.REACT_APP_BACKEND_URL+'imagen',formData, options).then(res =>{
       //console.log(res);
       setporcentajeSubidoImagen(100)
       setTimeout(setporcentajeSubidoImagen(0) ,2000)
@@ -155,9 +155,7 @@ useEffect(()=> {
               <div className="row">
                   <p></p>
               </div>
-              <div className="row">
-                  <h3></h3>
-              </div>
+              
                
               <div className="row">
                 <div className="col-lg-12 mb-5">

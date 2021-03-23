@@ -31,7 +31,7 @@ const zuzToast = function(){
         toast.classList = " zuz-toast fixed flex fontn anim s14 aic ";
         let alert = "bg-"+options.mensaje.categoria;
         toast.classList.add(alert);
-        toast.innerHTML = options.html || " Fancy Toast";
+        toast.innerHTML = options.html || " ";
 
         btn.classList =" fontb s15";
         btn.textContent = options.btnText || "OK";
